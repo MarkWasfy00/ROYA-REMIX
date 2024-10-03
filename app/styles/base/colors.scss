@@ -1,0 +1,24 @@
+html.light {
+    --primary: #0068B5;
+    --secondary: white;
+    --tertiary: #F2F2F2;
+    --quaternary: black;
+
+    --background: white;
+
+    --font: #0068B5;
+    --font-common: white;
+}
+
+
+html.dark {
+    --primary: #000026;
+    --secondary: #262626;
+    --tertiary: #444444;
+    --quaternary: white;
+
+    --background: #121212;
+
+    --font: white;
+    --font-common: white;
+}

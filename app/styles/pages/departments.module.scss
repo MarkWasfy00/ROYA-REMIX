@@ -1,0 +1,15 @@
+@use "../reusable.all.scss" as *;
+
+
+
+.departments {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(35rem, 1fr));
+    min-height: 100vh;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 10rem 2rem;
+    max-width: 150rem;
+    margin: 0 auto;
+
+}

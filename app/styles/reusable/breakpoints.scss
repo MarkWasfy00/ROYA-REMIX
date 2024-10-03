@@ -1,0 +1,16 @@
+@mixin breakpoint($dimension) {
+    @if $dimension == xs {
+      @media (min-width: 48em) { // 768px 
+        @content;
+      }
+    }@else if $dimension == md {
+      @media (min-width: 85.1875em) { // 1363 px 
+        @content;
+      }
+    }@else if $dimension == lg {
+      @media (min-width: 98.75rem) { // 1100 px
+        @content;
+      }
+    }
+  }
+  

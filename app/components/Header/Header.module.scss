@@ -1,0 +1,179 @@
+@use "../../styles/reusable.all.scss" as *;
+
+
+.header {
+  background-color: $color-secondary-light;
+  height: 7rem;
+  border-bottom: 1px solid $color-tertiary-light;
+
+  .navbar {
+    @include flex(false, center);
+    .logo {
+      background-color: $color-primary-light;
+      padding: 1rem 1.5rem;
+      img {
+        object-fit: contain;
+      }
+    }
+
+    .base {
+      @include flex(false, center, space-between);
+      gap: 2rem;
+      width: 100%;
+      height: 100%;
+      padding: 0 2%;
+
+     
+
+      .menu {
+        color: $font;
+        font-size: 2.5rem;
+
+        @include breakpoint(xs) {
+          display: none;
+        }
+      }
+
+      .navigator {
+        display: none;
+
+
+        @include breakpoint(xs) {
+          @include flex(false, center, space-between);
+          gap: 1rem;
+          
+          .left {
+            @include flex(false, center);
+            gap: 1rem;
+            color: $font;
+
+
+            .linker { 
+              text-decoration: none;
+              font-size: 1.5rem;
+              color: $font;
+              transition: $transition;
+              border-bottom: 1px solid transparent;
+
+              &:hover {
+                // color: $color-primary-light;
+                border-bottom: 1px solid $font;
+                cursor: pointer;
+              }
+            }
+
+            .dropmenuview {
+              position: relative;
+              .drop {
+                position: absolute;
+                background-color: $color-secondary-light;
+                border: 1px solid $color-tertiary-light;
+                padding: 1rem;
+                color: $font;
+                width: 20rem;
+                z-index: 100;
+                box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+                .dropitm {
+                  display: block;
+                  font-size: 1.5rem;
+                  padding: .5rem 2rem;
+                  color: $font;
+                  text-decoration: none;
+                  cursor: pointer;
+                }
+              }
+            }
+
+          }
+  
+          .mid {
+            a { 
+              text-decoration: none;
+              font-size: 1.5rem;
+              color: $font-common;
+              transition: $transition;
+              color: $font;
+              border-bottom: 1px solid transparent;
+              &:hover {
+                border-bottom: 1px solid $font;
+              }
+            }
+          }
+        }
+      }
+
+
+      .social {
+        @include flex(false, center);
+        margin-left: auto;
+        gap: 1rem;
+        .icon {
+          font-size: 2rem;
+          color: $font;
+        }
+      }
+
+    }
+
+    .navmobile {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0;
+
+      top: 7rem;
+      height: 100%;
+      background-color: $color-secondary-light;
+      z-index: 99;
+
+      @include breakpoint(xs) {
+        display: none;
+      }
+
+      .departmentsLink {
+        font-size: 1.5rem;
+        padding: 1rem;
+        display: block;
+        text-decoration: none;
+        color: $font;
+        letter-spacing: 1.5px;
+        font-weight: 200;
+        text-transform: uppercase;
+      }
+
+      .mobilelink {
+        @include flex(false, center, space-between);
+        padding: 1rem;
+        border-bottom: 1px solid $color-tertiary-light;
+        a {
+          color: $font;
+          text-decoration: none;
+          font-size: 1.5rem;
+          text-transform: uppercase;
+          letter-spacing: 1.5px;
+          font-weight: 200;
+        }
+        svg {
+          color: $color-primary-light;
+          font-size: 2.5rem;
+        }
+      }
+
+    }
+
+  }
+
+
+  .backshadow {
+    display: none;
+
+    @include breakpoint(xs) {
+      display: block;
+      position: fixed;
+      inset: 0 0 0 0;
+      // background-color: black;
+      z-index: 99;
+    }
+  }
+}

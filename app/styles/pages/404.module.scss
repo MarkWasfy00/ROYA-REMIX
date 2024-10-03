@@ -1,0 +1,19 @@
+@use "../reusable.all.scss" as *;
+
+
+
+.container {
+    min-height: 100vh;
+    background-color: $color-primary-light;
+    @include flex(false, center, center);
+    .notfound {
+        color: $font-common;
+        font-size: 2rem;
+        text-transform: uppercase;
+
+        @include breakpoint(xs) {
+            font-size: 4rem;
+        }
+    }
+
+}

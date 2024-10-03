@@ -1,0 +1,57 @@
+@font-face {
+    font-family: 'Neo Sans';
+    src: url('/fonts/Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Neo Sans';
+    src: url('/fonts/Bold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+  }
+  
+  
+  @font-face {
+    font-family: 'Neo Sans';
+    src: url('/fonts/Black.otf') format('opentype');
+    font-weight: 900; /* Typically for Black */
+    font-style: normal;
+  }
+  
+  
+  @font-face {
+    font-family: 'Neo Sans';
+    src: url('/fonts/Light.otf') format('opentype');
+    font-weight: 300; /* Typically for Light */
+    font-style: normal;
+  }
+  
+  
+  @font-face {
+    font-family: 'Neo Sans';
+    src: url('/fonts/Medium.otf') format('opentype');
+    font-weight: 500; /* Typically for Medium */
+    font-style: normal;
+  }
+  
+
+  @font-face {
+    font-family: 'Neo Sans';
+    src: url('/fonts/Ultra.otf') format('opentype');
+    font-weight: 800; /* Typically for Ultra */
+    font-style: normal;
+  }
+
+  
+  /* Example usage */
+  html {
+    font-size: 62.5%; /* This helps with rem calculations */
+  }
+  
+  body {
+    font-family: 'Neo Sans', sans-serif;
+    font-display: swap;
+  }
+  

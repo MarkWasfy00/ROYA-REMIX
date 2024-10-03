@@ -1,0 +1,152 @@
+@use "../reusable.all.scss" as *;
+
+
+.container {
+    background-color: transparent;
+    padding: 4rem 1rem;
+    @include flex(column);
+    gap: 2rem;
+    max-width: 150rem;
+    min-height: 100vh;
+    @include breakpoint(xs) {
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .switch {
+        align-self: flex-end;
+    }
+
+    .title {
+        text-transform: uppercase;
+        color: $font;
+        line-height: 3.5rem;
+        // position: relative;
+        height: 8rem;
+        // margin: 0 auto;
+        @include flex(false,center);
+        gap: 1rem;
+        flex-wrap: wrap;
+
+        @include breakpoint(xs) {
+            line-height: 5rem;
+            height: 10rem;
+        }
+
+        
+
+        .up {
+            font-size: 5rem;
+            font-weight: 600;
+            font-size: 5rem;
+    
+            @include breakpoint(xs) {
+                font-size: 7.5rem;
+            }
+        }
+        .down {
+            // position: absolute;
+            font-weight: 500;
+            font-size: 3.5rem;
+    
+            @include breakpoint(xs) {
+                font-size: 6rem;
+            }
+        }
+
+
+    }
+    
+    .pattern {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        width: 30rem;
+        height: 30rem;
+    }
+
+
+    .tickertape {
+        @include flex(false,center);
+        width: 100%;
+        overflow: hidden;
+        padding-left: 100%;
+        // background-color: $color-secondary-light;
+        height: 10rem;
+
+        position: relative;
+
+            &::after {
+                content: "";
+                position: absolute;
+                width: 30rem;
+                height: 10rem;
+                // background-color: $background;
+                background: linear-gradient(to right, $background 20%, rgba(18, 18, 18, .1) 100%);
+                // mix-blend-mode: darken;
+                background-size: 200%;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                
+            }
+
+        
+        .ticker {
+            white-space: nowrap;
+            padding-right: 100%;
+
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+            animation-name: ticker;
+            animation-duration: 20s; 
+            @include flex(false, center);
+            gap: 2rem;
+            
+
+            .tickeritem {
+                display: inline-block;
+                font-size: 8rem;
+                font-weight: 800;
+                letter-spacing: 1.5rem;
+                width: 20rem;
+                height: 20rem;
+                img {  
+                    padding: 1rem;
+                    width: 100%; /* Set image width to fill the parent div */
+                    aspect-ratio: 1 / 1;
+                    object-fit: scale-down;
+                }
+            }
+        }
+    }
+
+
+    .square {
+        display: none;
+        background-color: rgba(#4444, .05);
+        @include breakpoint(xs) {
+            display: block;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            width: 50rem;
+            height: 100%;
+        }
+    }
+}
+
+@keyframes ticker {
+    0% {
+        -webkit-transform: translateX(0);
+        visibility: visible;
+    }
+
+    100% {
+        -webkit-transform: translateX(-220%);
+        transform: translateX(-220%);
+    }
+}

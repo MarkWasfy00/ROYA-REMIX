@@ -1,0 +1,60 @@
+@use "../../styles/reusable.all.scss" as *;
+
+
+.card {
+    background-color: $color-secondary-light;
+    // width: 30rem;
+    max-height: 50rem;
+    border: 2px solid $color-tertiary-light;
+    @include flex(column,center);
+    .top {
+        img {
+            object-fit: cover;
+        }
+    }
+
+    .bot {
+        @include flex(column);
+        color: $font;
+        gap: 1rem;
+        padding: 1rem;
+        height: 20rem;
+        width: 100%;
+        .title {
+            font-size: 2rem;
+            font-weight: 500;
+        }
+
+        .description {
+            font-size: 1.5rem;
+            display: -webkit-box;        /* Required for line clamping */
+            -webkit-box-orient: vertical; /* Required for line clamping */
+            overflow: hidden;           /* Hide overflow */
+            -webkit-line-clamp: 3;      /* Number of lines to show before truncating */
+            max-height: 4.5em;          /* Set max height based on line height */
+            line-height: 1.5em;    
+        }
+
+        .linker {
+            margin-top: auto;
+            .link {
+                
+                background-color: transparent;
+                padding: 1rem;
+                border: 2px solid $color-primary-light;
+                color: $font;
+                font-size: 1.5rem;
+                transition: $transition;
+                cursor: pointer;
+                width: 100%;
+                
+
+                &:hover {
+                    color: $font-common;
+                    background-color: $color-primary-light;
+                }
+            }
+        }
+    }
+
+}
