@@ -100,14 +100,14 @@ const Slider: React.FC<SliderProps> = ({ slidesInfo }) => {
           ))}
         </Swiper>
       </div>
-      {/* <div className={styles.swipers}>
+      <div className={styles.swipers}>
         <div className={styles.prev} onClick={() => swiperInstance?.slidePrev()}>
           <MdKeyboardArrowLeft />
         </div>
         <div className={styles.next} onClick={() => swiperInstance?.slideNext()}>
           <MdKeyboardArrowRight />
         </div>
-      </div> */}
+      </div>
     </section>
   );
 };

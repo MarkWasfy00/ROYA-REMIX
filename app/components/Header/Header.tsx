@@ -80,13 +80,17 @@ const Header = () => {
                         headerData.categories.map(itm => (
                             <div onClick={() => setIsDeparmentsOpen(false)}  key={itm.name} className={styles.dropitm}>
                               <Link to={`/${itm.name}`} className={styles.sectionname}>{itm.name} <MdOutlineKeyboardArrowRight /></Link>
-                              <div className={styles.sectionitems}>
-                                {
-                                  itm.projects.map(project => (
-                                    <Link to={`/${itm.name}/${project.id}`} key={project.id} className={styles.sectionitem}>{project.name} <MdOutlineKeyboardArrowRight /></Link>
-                                  ))
-                                }
-                              </div>
+                              {
+                                itm.projects.length ? (
+                                  <div className={styles.sectionitems}>
+                                    {
+                                      itm.projects.map(project => (
+                                        <Link to={`/${itm.name}/${project.id}`} key={project.id} className={styles.sectionitem}>{project.name}</Link>
+                                      ))
+                                    }
+                                  </div>
+                                ): null
+                              }
                             </div>
                           )
                         )

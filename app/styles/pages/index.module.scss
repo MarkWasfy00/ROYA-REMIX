@@ -15,7 +15,7 @@
 
 .container {
     background-color: transparent;
-    padding: 2rem 1rem;
+    padding: 5rem 1rem;
     @include flex(column);
     gap: 2rem;
     max-width: 150rem;
@@ -89,7 +89,6 @@
         overflow: hidden;
         padding-left: 100%;
         height: 10rem;
-        border-top: 1px solid $color-tertiary-light;
         position: relative;
 
             // &::after {

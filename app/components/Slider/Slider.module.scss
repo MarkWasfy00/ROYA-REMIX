@@ -21,7 +21,8 @@
 }
 
 .swiperparent {
-  max-height: 50rem;
+  max-height: 55rem;
+  overflow: hidden;
   
 
   @include breakpoint (xs) {
@@ -123,7 +124,7 @@
 
 .swipers {
   @include flex(false,center, center);
-  margin-top: 4%;
+  margin-top: 2rem;
 
 
   .prev,
@@ -132,9 +133,8 @@
     border: none;
     font-size: 4rem;
     color: $font;
-
     @include breakpoint(xs) {
-      // position: absolute;
+      position: absolute;
       z-index: 5;
     }
   }
