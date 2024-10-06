@@ -3,12 +3,13 @@ import {
   Links,
   Meta,
   Outlet,
+  redirect,
   Scripts,
   ScrollRestoration,
   useLoaderData,
 } from '@remix-run/react'
 
-import { useTheme } from './routes/resources/theme-switch';
+import { ThemeFormSchema, useTheme } from './routes/resources/theme-switch';
 import { ClientHintCheck, useHints } from './client/client-hints'
 import { getTheme, setTheme, type Theme } from './utils/theme.server'
 import { getHints } from './client/client-hints';
@@ -18,7 +19,6 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import { parseWithZod } from '@conform-to/zod';
 import { invariantResponse } from '@epic-web/invariant';
-import { z } from 'zod';
 import { Server } from './utils/server';
 
 interface Category {
@@ -53,9 +53,11 @@ export async function loader({ request }: LoaderFunctionArgs) {
   const contactData: Contacts = await contact.json()
   const categoriesData: Categories = await categories.json()
 
+
   return json({
     requestInfo: {
       hints: getHints(request),
+      path: new URL(request.url).pathname,
       userPrefs: {
         theme: getTheme(request),
       },
@@ -65,22 +67,25 @@ export async function loader({ request }: LoaderFunctionArgs) {
   });
 }
 
-const ThemeFormSchema = z.object({
-  theme: z.enum(['system', 'light', 'dark']),
-});
-
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  const formData = await request.formData();
-  const submission = parseWithZod(formData, { schema: ThemeFormSchema });
+  const formData = await request.formData()
+	const submission = parseWithZod(formData, {
+		schema: ThemeFormSchema,
+	})
 
-  invariantResponse(submission.status === 'success', 'Invalid theme received');
+	invariantResponse(submission.status === 'success', 'Invalid theme received')
 
-  const { theme } = submission.value;
-  const responseInit = {
-    headers: { 'set-cookie': setTheme(theme) },
-  };
-  return json({ result: submission.reply() }, responseInit);
+	const { theme, redirectTo } = submission.value
+
+	const responseInit = {
+		headers: { 'set-cookie': setTheme(theme) },
+	}
+	if (redirectTo) {
+		return redirect(redirectTo, responseInit)
+	} else {
+		return json({ result: submission.reply() }, responseInit)
+	}
 }
 
 

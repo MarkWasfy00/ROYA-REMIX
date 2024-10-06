@@ -4,53 +4,56 @@ import { LuSun } from "react-icons/lu"; // Icon for Dark mode
 import { useFetcher } from '@remix-run/react';
 import { useForm, getFormProps } from '@conform-to/react';
 import { useState } from 'react';
-import { useOptimisticThemeMode } from '~/routes/resources/theme-switch';
+import { Theme } from '~/utils/theme.server';
+import { action } from '~/root';
+import { ServerOnly } from 'remix-utils/server-only';
+import { useRequestInfo } from '~/client/request-info';
 
-// Global variable to hold the theme mode
-let currentTheme = 'light'; // Default theme
+const Modes = ({
+  userPreference,
+}: {
+  userPreference?: Theme | null
+}) => {
+  const fetcher = useFetcher<typeof action>(); // For submitting the form
+  const requestInfo = useRequestInfo()
 
-const Modes = () => {
-  const fetcher = useFetcher(); // For submitting the form
-  const resolvedTheme = useOptimisticThemeMode() ||currentTheme; // Fallback to 'dark' if undefined
-  const [form] = useForm({ id: 'theme-switch' }); // Create the form
+  const [form] = useForm({
+    id: 'theme-switch',
+    lastResult: fetcher.data?.result,
+  });
 
-  // State to manage button text and icon
-  const [buttonState, setButtonState] = useState(resolvedTheme === 'dark' ? 'Light' : 'Dark');
+  const [theme, setTheme] = useState<Theme>(userPreference || 'light');
 
-  // Toggle theme and submit the form
-  const toggleMode = () => {
-    // Determine the new mode based on the current resolvedTheme
-    const newMode = resolvedTheme === 'dark' ? 'light' : 'dark';
-    currentTheme=newMode
-    // Submit the form programmatically
-    fetcher.submit(
-      {
-        theme: newMode, // Send the newMode
-      },
-      {
-        method: 'post',
-        action: '/', // Your action path in Remix
-      }
-    );
-
-    // Update the button state immediately to reflect the next mode
-    setButtonState(newMode === 'dark' ? 'Light' : 'Dark');
+  const toggleTheme = () => {
+    const nextTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(nextTheme);
   };
 
-  // Use resolvedTheme to determine the button icon
-  const buttonIcon = resolvedTheme === "light" ? <FaMoon /> : <LuSun />;
+  const modeLabel = {
+    light: "Dark",
+    dark: "Light",
+  };
 
+
+  const buttonIcon = modeLabel[theme] === "Light" ? <LuSun />: <FaMoon />;
   return (
     <fetcher.Form method="POST" {...getFormProps(form)} action="/">
-      <input type="hidden" name="theme" value={resolvedTheme === 'dark' ? 'light' : 'dark'} />
+      <ServerOnly>
+        {() => (
+          <input type="hidden" name="redirectTo" value={requestInfo.path} />
+        )}
+      </ServerOnly>
+      <input type="hidden" name="theme" value={theme} />
 
-      <div
-        className={`${styles.button} ${resolvedTheme === "light" ? styles.dark : styles.light}`}
-        onClick={toggleMode}
+
+      <button
+        className={`${styles.button}`}
+        type='submit'
+        onClick={toggleTheme}
       >
-        <div className={styles.mode}>{buttonState}</div> {/* Show the state that is being toggled */}
+        <div className={styles.mode} >{modeLabel[theme]}</div> {/* Show the state that is being toggled */}
         <div className={styles.icon}>{buttonIcon}</div>
-      </div>
+      </button>
     </fetcher.Form>
   );
 };

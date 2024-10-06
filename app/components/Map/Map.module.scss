@@ -1,0 +1,10 @@
+@use "../../styles/reusable.all.scss" as *;
+
+
+
+.iframe {
+    border: none;
+    width: 100%;
+    height: 20rem;
+    filter: grayscale(70%)
+}

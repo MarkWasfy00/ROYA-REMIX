@@ -8,6 +8,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { useTheme } from '~/routes/resources/theme-switch';
 import { useLoaderData } from '@remix-run/react';
+import Map from '../Map/Map';
 
 interface Contact {
   landline: string;
@@ -38,7 +39,6 @@ const Footer= () => {
                 <a href={`mailto:${footerData.contact.email}`}><MdEmail /> {footerData.contact.email}</a>
             </p>
         </div>
-        
         <div className={styles.socialmedia}>
             <a href={`${footerData.contact.instagram_account}`} target="_blank" aria-label="Instagram"><FaInstagram /></a>
             <a href={`${footerData.contact.twitter_account}`} target="_blank" aria-label="X (formerly Twitter)"><FaXTwitter /></a>
@@ -53,6 +53,9 @@ const Footer= () => {
         </div>
         <div className={styles.logo}>
             <img width={70} height={85} src={`${theme === "dark" ? "/svgs/white-logo.svg": "/svgs/black-logo.svg"}`} alt="Roya technology logo" />
+        </div>
+        <div className={styles.map}>
+          <Map />
         </div>
     </footer>
   )

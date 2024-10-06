@@ -4,7 +4,7 @@ import { useHints } from '~/client/client-hints';
 import { useRequestInfo } from '~/client/request-info';
 import { z } from 'zod';
 
-const ThemeFormSchema = z.object({
+export const ThemeFormSchema = z.object({
   theme: z.enum(['system', 'light', 'dark']),
   // this is useful for progressive enhancement
   redirectTo: z.string().optional(),

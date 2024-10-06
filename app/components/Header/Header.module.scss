@@ -8,6 +8,9 @@
 
   .navbar {
     @include flex(false, center);
+    gap: 1rem;
+    position: relative;
+
     .logo {
       background-color: $color-primary-light;
       padding: 1rem 1.5rem;
@@ -19,9 +22,9 @@
     .base {
       @include flex(false, center, space-between);
       gap: 2rem;
+      padding: 1rem 2rem 1rem 0;
       width: 100%;
       height: 100%;
-      padding: 0 2%;
 
      
 
@@ -36,7 +39,7 @@
 
       .navigator {
         display: none;
-
+        width: 90%;
 
         @include breakpoint(xs) {
           @include flex(false, center, space-between);
@@ -48,13 +51,24 @@
             color: $font;
 
 
+            .home { 
+              text-decoration: none;
+              font-size: 1.5rem;
+              color: $font;
+              transition: $transition;
+              font-weight: 600;
+              margin-right: 2rem;
+              text-align: end;
+            }
+
             .linker { 
               text-decoration: none;
               font-size: 1.5rem;
               color: $font;
               transition: $transition;
               border-bottom: 1px solid transparent;
-
+              @include flex(false, center, center);
+              gap: 1rem;
               &:hover {
                 // color: $color-primary-light;
                 border-bottom: 1px solid $font;
@@ -62,13 +76,14 @@
               }
             }
 
+
             .dropmenuview {
-              position: relative;
               .drop {
+                top: 7rem;
                 position: absolute;
                 background-color: $color-secondary-light;
                 border: 1px solid $color-tertiary-light;
-                padding: 1rem;
+                border-top: none;
                 color: $font;
                 width: 20rem;
                 z-index: 100;
@@ -80,7 +95,43 @@
                   color: $font;
                   text-decoration: none;
                   cursor: pointer;
+                  width: 100%;
+                  position: relative;
+
+                  &:hover {
+                    .sectionitems {
+                      display: block;
+                    }
+                  }
+
+                  .sectionname {
+                    @include flex(false ,center, space-between);
+                  }
+
+                  .sectionitems {
+                    display: none;
+                    position: absolute;
+                    background-color: $color-secondary-light;
+                    border: 1px solid $color-tertiary-light;
+                    border-left: none;
+                    left: 100%;
+                    top: 1.5rem;
+                    width: 20rem;
+                    height: 20rem;
+                    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+
+                    &:hover {
+                      display: block;
+                    }
+
+                    .sectionitem {
+                      padding: .5rem 2rem;
+                      @include flex(false, center, space-between);
+                    }
+                  }
                 }
+
+
               }
             }
 
@@ -172,7 +223,8 @@
       display: block;
       position: fixed;
       inset: 0 0 0 0;
-      // background-color: black;
+      background-color: black;
+      opacity: .1;
       z-index: 99;
     }
   }

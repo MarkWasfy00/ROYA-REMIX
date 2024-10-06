@@ -1,10 +1,9 @@
-import type { ActionFunctionArgs, MetaFunction } from "@remix-run/node";
+import type {  MetaFunction } from "@remix-run/node";
 import styles from "../styles/pages/index.module.scss"
 import Slider from "~/components/Slider/Slider";
 import { json, redirect, useLoaderData } from "@remix-run/react";
-import { getCategories } from "~/utils/api";
-import Modes from "~/components/Modes/Modes";
 import { Server } from "~/utils/server";
+import Recent from "~/components/Recent/Recent";
 
 
 interface Category {
@@ -14,17 +13,16 @@ interface Category {
   image: string;
 }
 
-interface CategoriesContent {
-  categories: {
-    id: number;
-    name: string;
-    description: string;
-    image: string;
-  }[],
-  status?: string;
+interface Logos {
+  id: number;
+  name: string;
+  image: string;
 }
 
-type Categories = Category[];
+type Categories = {
+  categories: Category[],
+  logos: Logos[]
+};
 
 
 
@@ -32,13 +30,15 @@ type Categories = Category[];
 // Loader function runs on the server
 export const loader = async () => {
   const response = await fetch(`${Server.apiv1}/categories`, { cache: "force-cache" })
-  const category: CategoriesContent = await response.json()
+  const sponser = await fetch(`${Server.apiv1}/logos`, { cache: "force-cache" })
+  
+  const category = await response.json()
+  const sponsers = await sponser.json()
 
-  if (category.status) {
+  if (category.status || sponsers.status) {
     return redirect("/404")
   }
-
-  return json(category.categories)
+  return json({ categories: category.categories, logos: sponsers.logos })
 };
 
 
@@ -51,44 +51,37 @@ export const meta: MetaFunction = () => {
 
 
 export default function Index() {
-  const data = useLoaderData<Categories>(); 
-  
+  const data = useLoaderData<Categories>();
+
   return (
     <main className={styles.container}>
+      
       {/* <div className={styles.switch}>
         <Modes /> 
       </div> */}
-      <div className={styles.title}>
+      {/* <div className={styles.title}>
         <div className={styles.up}>roya</div>
         <div className={styles.down}>technology</div>
-      </div>
+      </div> */}
       <div className={styles.slider}>
-        <Slider slidesInfo={data} />
+        <Slider slidesInfo={data.categories} />
       </div>
       <div className={styles.pattern}>
         <img src={"/background/pattern.webp"} alt='Pattern' />
       </div>
       <div className={styles.tickertape}>
         <div className={styles.ticker}>
-          <div className={styles.tickeritem}>
-            <img src="/logos/1.png" alt="" />
-          </div>
-          <div className={styles.tickeritem}>
-            <img src="/logos/2.png" alt="" />
-          </div>
-          <div className={styles.tickeritem}>
-            <img src="/logos/3.png" alt="" />
-          </div>
-          <div className={styles.tickeritem}>
-            <img src="/logos/4.png" alt="" />
-          </div>
-          <div className={styles.tickeritem}>
-            <img src="/logos/5.png" alt="" />
-          </div>
-          <div className={styles.tickeritem}>
-            <img src="/logos/6.png" alt="" />
-          </div>
+          {
+            data.logos.map(sponser => (
+              <div key={sponser.id} className={styles.tickeritem}>
+                <img src={`${Server.media}${sponser.image}`} alt={sponser.name} />
+              </div>
+            ))
+          }
         </div>
+      </div>
+      <div className={styles.recent}>
+        <Recent />
       </div>
       <div className={styles.square}></div>
     </main>

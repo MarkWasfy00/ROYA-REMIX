@@ -8,8 +8,9 @@ import { FaLinkedin } from "react-icons/fa";
 import { HiX } from "react-icons/hi";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { Link, useLoaderData } from '@remix-run/react';
-import { Server } from '~/utils/server';
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import Modes from '../Modes/Modes';
+import { loader } from '~/root';
 
 interface Category {
   id: number;
@@ -41,6 +42,7 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDeparmentsOpen, setIsDeparmentsOpen] = useState(false);
   const headerData = useLoaderData<Header>()
+  const data = useLoaderData<typeof loader>()
 
 
   const toggleMenu = () => {
@@ -68,15 +70,24 @@ const Header = () => {
           </div>
           <div className={styles.navigator}>
             <div className={styles.left}>
-              <Link className={styles.linker} to="/">Home</Link>
+              <Link className={styles.home} to="/">ROYA TECHNOLOGY</Link>
               <div className={styles.dropmenuview}>
-                <div className={styles.linker} onClick={() => setIsDeparmentsOpen(true)}>Departments</div>
+                <div className={styles.linker} onClick={() => setIsDeparmentsOpen(true)}>Departments <RiArrowDropDownLine /></div>
                 {
                   isDeparmentsOpen ? (
                     <div className={styles.drop}>
+                      
+
                       {
                         headerData.categories.map(itm => (
-                            <Link onClick={() => setIsDeparmentsOpen(false)} to={`/${itm.name}`} key={itm.id} className={styles.dropitm}>{itm.name}</Link>
+                            <Link onClick={() => setIsDeparmentsOpen(false)} to={`/${itm.name}`} key={itm.id} className={styles.dropitm}>
+                              <div className={styles.sectionname}>{itm.name} <MdOutlineKeyboardArrowRight /></div>
+                              <div className={styles.sectionitems}>
+                                <div className={styles.sectionitem}>test <MdOutlineKeyboardArrowRight /></div>
+                                <div className={styles.sectionitem}>test <MdOutlineKeyboardArrowRight /></div>
+                                <div className={styles.sectionitem}>test <MdOutlineKeyboardArrowRight /></div>
+                              </div>
+                            </Link>
                           )
                         )
                       }
@@ -97,7 +108,7 @@ const Header = () => {
             <Link to={headerData.contact.linkedin_account} target='_blank' aria-label="Linkedin" className={styles.icon}><FaLinkedin /></Link>
           </div>
           <div className={styles.switch}>
-            <Modes /> 
+            <Modes userPreference={data.requestInfo.userPrefs.theme} />
           </div>
         </div>
         

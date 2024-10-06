@@ -1,82 +1,121 @@
 @use "../../styles/reusable.all.scss" as *;
 
 
+@keyframes fadeIn {
+  0% {
+    top: 0;
+  }
+
+  100% {
+    top: 15%;
+    background-color: $color-primary-light;
+  }
+}
+
 .section {
   @include breakpoint(xs) {
     position: relative;
+
   }
+  
 }
 
 .swiperparent {
-  height: 50rem;
-  @include flex(false,center);
+  max-height: 50rem;
+  
+
+  @include breakpoint (xs) {
+    .activeswiper{
+      width: 85% !important;
+      transition: 1s;
+      .content {
+        animation: .5s fadeIn  ease-in-out forwards;
+      }
+    }
+  }
+
 }
 .swiperbody {
-  // background-image: url("/images/earth.jpg");
-  background-size: cover;
-  padding: 2rem 2rem;
-  // width: 80% !important;
-  display: flex !important;
-  flex-direction: column;
-  // justify-content: center;
-  // gap: 2rem;
-  
-
-  
-  // @include breakpoint(lg) {
-  //   width: 80% !important;
-  // }
-  
-  .head {
-    @include flex(column);
-    gap: 1rem;
-    .title {
-      color: $font-common;
-      font-size: 3.5rem;
-      // font-size: clamp(2.5rem, 3.5vw, 5rem);
-      font-weight: 300;
-      text-transform: uppercase;
-
-      @include breakpoint(lg) {
-        font-size: 5rem;
-        font-weight: 400;
-      }
-    }
-
-    .info {
-      color: $font-common;
-      @include breakpoint(xs) {
-        font-size: 1.5rem;
-        max-width: 40rem;
-      }
-      
+  position: relative;
+  // height: 50rem !important;
+  width: 90% !important;
+  .image {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: auto;
+    padding-top: 40%;
+    
+    @include breakpoint(xs) {
+      min-height: 30rem;
+      background-size: contain;
     }
     
+  }
 
-    .path {
-      @include flex(false, center);
-      gap: 1rem;
-      font-size: 1.5rem;
+  .content {
+    @include breakpoint(xs) {
+      position: absolute;
+      top: 0%;
+      left: 5%;
+      padding: 2rem 5rem;
+    }
+
+    .head {
+      @include flex(column);
+      padding: 1rem;
       
-      .link {
-        a {
-          color: $font-common;
-          text-decoration: none;
-          text-transform: uppercase;
+      gap: 1rem;
+      .title {
+        color: $font-common;
+        font-size: 3.5rem;
+        // font-size: clamp(2.5rem, 3.5vw, 5rem);
+        font-weight: 300;
+        text-transform: uppercase;
+  
+        @include breakpoint(lg) {
+          font-size: 5rem;
+          font-weight: 400;
         }
       }
   
-      .icon {
+      .info {
         color: $font-common;
+        @include breakpoint(xs) {
+          font-size: 1.5rem;
+          max-width: 40rem;
+        }
+        
+      }
+      
+  
+      .path {
+        @include flex(false, center);
+        gap: 1rem;
+        font-size: 1.5rem;
+        
+        .link {
+          a {
+            color: $font-common;
+            text-decoration: none;
+            text-transform: uppercase;
+          }
+        }
+    
+        .icon {
+          color: $font-common;
+        }
       }
     }
+  
+    .bot {
+      margin-top: auto;
+      color: $font-common;
+      font-size: 2rem;
+    }
   }
-
-  .bot {
-    margin-top: auto;
-    color: $font-common;
-    font-size: 2rem;
-  }
+  
+  
 
   
 
@@ -84,7 +123,7 @@
 
 .swipers {
   @include flex(false,center, center);
-  margin-top: 2rem;
+  margin-top: 4%;
 
 
   .prev,
@@ -95,7 +134,7 @@
     color: $font;
 
     @include breakpoint(xs) {
-      position: absolute;
+      // position: absolute;
       z-index: 5;
     }
   }

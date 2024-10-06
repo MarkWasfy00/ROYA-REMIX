@@ -3,9 +3,9 @@
 
 .container {
     background-color: transparent;
-    padding: 4rem 1rem;
+    padding: 2rem 1rem;
     @include flex(column);
-    gap: 2rem;
+    gap: 4rem;
     max-width: 150rem;
     min-height: 100vh;
     @include breakpoint(xs) {
@@ -77,20 +77,20 @@
 
         position: relative;
 
-            &::after {
-                content: "";
-                position: absolute;
-                width: 30rem;
-                height: 10rem;
-                // background-color: $background;
-                background: linear-gradient(to right, $background 20%, rgba(18, 18, 18, .1) 100%);
-                // mix-blend-mode: darken;
-                background-size: 200%;
-                left: 0;
-                top: 0;
-                bottom: 0;
+            // &::after {
+            //     content: "";
+            //     position: absolute;
+            //     width: 30rem;
+            //     height: 10rem;
+            //     // background-color: $background;
+            //     background: linear-gradient(to right, $background 20%, rgba(18, 18, 18, .1) 100%);
+            //     // mix-blend-mode: darken;
+            //     background-size: 200%;
+            //     left: 0;
+            //     top: 0;
+            //     bottom: 0;
                 
-            }
+            // }
 
         
         .ticker {
@@ -106,17 +106,18 @@
             
 
             .tickeritem {
-                display: inline-block;
+                @include flex(false, center, center);
                 font-size: 8rem;
                 font-weight: 800;
                 letter-spacing: 1.5rem;
                 width: 20rem;
                 height: 20rem;
-                img {  
-                    padding: 1rem;
-                    width: 100%; /* Set image width to fill the parent div */
-                    aspect-ratio: 1 / 1;
-                    object-fit: scale-down;
+                img {
+                    width: 70%;
+                    aspect-ratio: 3 / 4;
+                    object-fit: contain;
+                    mix-blend-mode: color-burn;
+                    filter: grayscale(100%);
                 }
             }
         }

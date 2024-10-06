@@ -8,16 +8,19 @@
     background-color: $color-tertiary-light;
     @include flex(column);
     gap: 5rem;
-    padding: 1rem;
+    padding: 3rem;
     
-    @include breakpoint(xs) {
+    @include breakpoint(lg) {
         flex-direction: row;
-        padding: 4rem
     }
     
     .info {
         @include flex(column);
         gap: 2rem;
+
+        @include breakpoint(lg) {
+            justify-content: space-around;
+        }
         .contact {
             p {
                 @include flex(column);
@@ -51,6 +54,7 @@
             color: $color-quaternary-light;
             text-transform: capitalize;
             max-width: 80rem;
+            
         }
 
         
@@ -60,8 +64,16 @@
         img {
             object-fit: cover;
         }
-        @include breakpoint(xs) {
+        order: 3;
+        @include breakpoint(lg) {
             order: -1;
+        }
+    }
+
+    .map {
+        width: 100%;
+        @include breakpoint(lg) {
+            width: 50%;
 
         }
     }

@@ -3,28 +3,41 @@
 
 
 .button {
-    @include flex(false, center);
+    @include flex(false, center, center);
     gap: 1rem;
     font-size: 1.5rem;
-    width: fit-content;
+    
     padding: .5rem 1.5rem;
-}
-
-.mode {
-    display: none;
+    background-color: $color-primary-light;
+    border: none;
 
     @include breakpoint(xs) {
-        display: block;
+        width: 9rem;
+    }
+
+    .mode {
+        color: $font-common;
+        display: none;
+            @include breakpoint(xs) {
+            display: block;
+        }
+    }
+
+    .icon {
+        color: $font-common;
     }
 }
 
 
-.light {
-    background-color: $color-primary-light;
-    color: $font;
-}
 
-.dark {
-    background-color: $color-primary-light;
-    color: $color-secondary-light;
-}
+
+// .light {
+//     background-color: $color-primary-light;
+//     color: $font;
+// }
+
+// .dark {
+//     background-color: $color-primary-light;
+//     // color: $font;
+//     color: red;
+// }
