@@ -59,6 +59,10 @@
 
   .anti-scroll {
     overflow: hidden;
+
+    @include breakpoint(xs) {
+      overflow: scroll;
+    }
   }
 
   /*

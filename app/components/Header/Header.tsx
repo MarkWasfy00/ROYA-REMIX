@@ -42,6 +42,7 @@ interface Header {
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDeparmentsOpen, setIsDeparmentsOpen] = useState(false);
+  const [openedDepartment, setOpenedDepartment] = useState("")
   const headerData = useLoaderData<Header>()
   const data = useLoaderData<typeof loader>()
 
@@ -52,6 +53,21 @@ const Header = () => {
   const toggleDeparments = () => {
     setIsDeparmentsOpen(!isDeparmentsOpen)
   }
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add('anti-scroll');
+    } else {
+      document.body.classList.remove('anti-scroll');
+    }
+
+    // Cleanup function to remove the class when the component unmounts
+    return () => {
+      document.body.classList.remove('anti-scroll');
+    };
+  }, [isOpen]); // Depend on isActive, so it runs when isActive changes
+
+
 
   return (
     <header className={styles.header}>
@@ -120,7 +136,7 @@ const Header = () => {
           isOpen ? (
             <ul className={styles.navmobile}>
               <li className={styles.mobilelink} >
-                <Link to={"/"} >Home</Link>
+                <Link onClick={() => setIsOpen(false)} to={"/"} >Home</Link>
                 <RiArrowDropDownLine />
                 </li>
               <li onClick={toggleDeparments} className={styles.mobilelink} >
@@ -130,7 +146,20 @@ const Header = () => {
               {
                 isDeparmentsOpen ? (
                   headerData.categories.map((itm) => (
-                    <Link key={itm.name} to={`/${itm.name}`} onClick={() => setIsOpen(false)} className={styles.departmentsLink}>{itm.name}</Link>
+                    <div key={itm.name}  onClick={() => setOpenedDepartment(openedDepartment === itm.name ? "" : itm.name)} className={styles.departmentsLink}>
+                      <div className={styles.department}>{itm.name}</div>
+
+                      { 
+                        openedDepartment === itm.name &&  <div className={styles.departmentprojects}>
+                          {
+                            itm.projects.map(pro => (
+                              <Link key={pro.name} to={`/${itm.name}/${pro.id}`} onClick={() => setIsOpen(false)} className={styles.departmentproject}>{pro.name}</Link>
+                            ))
+                          }
+                          <Link key={`${itm.name}-all`} to={`/${itm.name}`} onClick={() => setIsOpen(false)} className={styles.departmentproject}>All {itm.name}</Link>
+                        </div>
+                      }
+                    </div>
                   ))
                 ): null
               }
