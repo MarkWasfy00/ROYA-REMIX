@@ -106,6 +106,8 @@
 
                   .sectionname {
                     @include flex(false ,center, space-between);
+                    text-decoration: none;
+                    color: $font;
                   }
 
                   .sectionitems {
@@ -117,7 +119,8 @@
                     left: 100%;
                     top: 1.5rem;
                     width: 20rem;
-                    height: 20rem;
+                   
+                    // height: 20rem;
                     box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 
                     &:hover {
@@ -127,6 +130,8 @@
                     .sectionitem {
                       padding: .5rem 2rem;
                       @include flex(false, center, space-between);
+                      text-decoration: none;
+                      color: $font;
                     }
                   }
                 }
@@ -167,16 +172,14 @@
     }
 
     .navmobile {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      position: fixed;
+      inset: 7rem 0 0 0;
       padding: 0;
 
-      top: 7rem;
       height: 100%;
       background-color: $color-secondary-light;
       z-index: 99;
+    
 
       @include breakpoint(xs) {
         display: none;

@@ -31,7 +31,7 @@
   #root {
     height: 100%;
   }
-
+  
   body {
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
@@ -41,7 +41,26 @@
     height: 100%;
     overflow-x: hidden;
     background-color: $background;
+
+
+    &::-webkit-scrollbar {
+      width: .5rem;
+    }
+    &::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      background-color: $color-tertiary-light;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $color-primary-light;
+    }
+
   }
+
+  .anti-scroll {
+    overflow: hidden;
+  }
+
   /*
     5. Improve media defaults
   */

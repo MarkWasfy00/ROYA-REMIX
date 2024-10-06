@@ -22,10 +22,11 @@ import { invariantResponse } from '@epic-web/invariant';
 import { Server } from './utils/server';
 
 interface Category {
-  id: number;
   name: string;
-  description: string;
-  image: string;
+  projects : {
+    id: number;
+    name: string;
+  }[]
 }
 
 interface Categories {
@@ -49,7 +50,7 @@ interface Contacts {
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const contact = await fetch(`${Server.apiv1}/contact`, { cache: "force-cache" })
-  const categories = await fetch(`${Server.apiv1}/categories`, { cache: "force-cache" })
+  const categories = await fetch(`${Server.apiv1}/headers`, { cache: "force-cache" })
   const contactData: Contacts = await contact.json()
   const categoriesData: Categories = await categories.json()
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './Header.module.scss'; // Import SCSS module
 import { IoMenu } from "react-icons/io5";
 import { FaInstagram } from "react-icons/fa";
@@ -13,10 +13,11 @@ import Modes from '../Modes/Modes';
 import { loader } from '~/root';
 
 interface Category {
-  id: number;
   name: string;
-  description: string;
-  image: string;
+  projects: {
+    id: number;
+    name: string;
+  }[]
 }
 
 interface Contact {
@@ -43,7 +44,6 @@ const Header = () => {
   const [isDeparmentsOpen, setIsDeparmentsOpen] = useState(false);
   const headerData = useLoaderData<Header>()
   const data = useLoaderData<typeof loader>()
-
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -76,18 +76,18 @@ const Header = () => {
                 {
                   isDeparmentsOpen ? (
                     <div className={styles.drop}>
-                      
-
                       {
                         headerData.categories.map(itm => (
-                            <Link onClick={() => setIsDeparmentsOpen(false)} to={`/${itm.name}`} key={itm.id} className={styles.dropitm}>
-                              <div className={styles.sectionname}>{itm.name} <MdOutlineKeyboardArrowRight /></div>
+                            <div onClick={() => setIsDeparmentsOpen(false)}  key={itm.name} className={styles.dropitm}>
+                              <Link to={`/${itm.name}`} className={styles.sectionname}>{itm.name} <MdOutlineKeyboardArrowRight /></Link>
                               <div className={styles.sectionitems}>
-                                <div className={styles.sectionitem}>test <MdOutlineKeyboardArrowRight /></div>
-                                <div className={styles.sectionitem}>test <MdOutlineKeyboardArrowRight /></div>
-                                <div className={styles.sectionitem}>test <MdOutlineKeyboardArrowRight /></div>
+                                {
+                                  itm.projects.map(project => (
+                                    <Link to={`/${itm.name}/${project.id}`} key={project.id} className={styles.sectionitem}>{project.name} <MdOutlineKeyboardArrowRight /></Link>
+                                  ))
+                                }
                               </div>
-                            </Link>
+                            </div>
                           )
                         )
                       }
@@ -125,8 +125,8 @@ const Header = () => {
               </li>
               {
                 isDeparmentsOpen ? (
-                  headerData.categories.map(itm => (
-                    <Link key={itm.id} to={`/${itm.name}`} onClick={() => setIsOpen(false)} className={styles.departmentsLink}>{itm.name}</Link>
+                  headerData.categories.map((itm) => (
+                    <Link key={itm.name} to={`/${itm.name}`} onClick={() => setIsOpen(false)} className={styles.departmentsLink}>{itm.name}</Link>
                   ))
                 ): null
               }

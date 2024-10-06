@@ -80,9 +80,9 @@ export default function Index() {
           }
         </div>
       </div>
-      <div className={styles.recent}>
+      {/* <div className={styles.recent}>
         <Recent />
-      </div>
+      </div> */}
       <div className={styles.square}></div>
     </main>
   );

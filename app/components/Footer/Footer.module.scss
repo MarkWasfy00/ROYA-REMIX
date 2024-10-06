@@ -8,19 +8,19 @@
     background-color: $color-tertiary-light;
     @include flex(column);
     gap: 5rem;
-    padding: 3rem;
+    padding: 2rem;
+
     
     @include breakpoint(lg) {
         flex-direction: row;
+        padding-top: 4rem;
     }
     
     .info {
         @include flex(column);
         gap: 2rem;
 
-        @include breakpoint(lg) {
-            justify-content: space-around;
-        }
+      
         .contact {
             p {
                 @include flex(column);
