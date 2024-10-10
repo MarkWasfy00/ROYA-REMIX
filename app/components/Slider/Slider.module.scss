@@ -5,12 +5,34 @@
   0% {
     top: 0;
   }
-
   100% {
     top: 15%;
-    background-color: $color-secondary-light;
+    background-color: $color-secondary-opacity;
   }
 }
+
+@keyframes fadeInWithoutBackground {
+  0% {
+    opacity: 0;
+    transform: translateY(-10rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInWithoutBackgroundAndTranslate {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 
 .section {
   @include breakpoint(xs) {
@@ -24,13 +46,43 @@
   max-height: 55rem;
   overflow: hidden;
   
+  @include breakpoint(xs) {
+    max-height: 70rem;
 
-  @include breakpoint (xs) {
+  }
+
+  @include breakpoint (lg) {
     .activeswiper{
       width: 85% !important;
       transition: 1s;
       .content {
         animation: .5s fadeIn  ease-in-out forwards;
+
+
+        
+      }
+    }
+  }
+
+  .activeswiper {
+    .content {
+
+      .head {
+        .title {
+          animation: 1s fadeInWithoutBackground  ease-in-out forwards;
+  
+        }
+
+        .info {
+          opacity: 0;
+          animation: 1s fadeInWithoutBackgroundAndTranslate 1s  ease-in-out forwards;
+  
+        }
+
+        .path {
+          animation: 1s fadeInWithoutBackground  ease-in-out forwards;
+  
+        }
       }
     }
   }
@@ -55,10 +107,11 @@
   }
 
   .content {
-    @include breakpoint(xs) {
+    @include breakpoint(lg) {
       position: absolute;
       top: 0%;
-      left: 5%;
+      left: 0;
+      width: 50rem;
       padding: 2rem 5rem;
     }
 
@@ -71,12 +124,11 @@
         color: $font;
         font-size: 3.5rem;
         // font-size: clamp(2.5rem, 3.5vw, 5rem);
-        font-weight: 300;
+        font-weight: 500;
         text-transform: uppercase;
-  
-        @include breakpoint(lg) {
+       
+        @include breakpoint(xs) {
           font-size: 5rem;
-          font-weight: 400;
         }
       }
   
@@ -85,7 +137,8 @@
         @include breakpoint(xs) {
           font-size: 1.5rem;
           max-width: 40rem;
-        }
+        };
+        
         
       }
       
@@ -94,17 +147,20 @@
         @include flex(false, center);
         gap: 1rem;
         font-size: 1.5rem;
+        text-align: center;
         
         .link {
           a {
             color: $font;
             text-decoration: none;
             text-transform: uppercase;
+            font-weight: 500;
           }
         }
     
         .icon {
           color: $font;
+          font-size: 3rem;
         }
       }
     }
@@ -126,14 +182,29 @@
   @include flex(false,center, center);
   margin-top: 2rem;
 
+  @include breakpoint(xs) {
+    // margin-top: 5rem;
+  }
+
+  
+
 
   .prev,
   .next {
     background-color: transparent;
     border: none;
-    font-size: 4rem;
     color: $font;
+    font-size: 4rem;
+    padding: 2rem;
+
     @include breakpoint(xs) {
+      font-size: 8rem;
+      position: absolute;
+      z-index: 5;
+    }
+
+    @include breakpoint(lg) {
+      font-size: 15rem;
       position: absolute;
       z-index: 5;
     }
@@ -141,17 +212,26 @@
 
   .prev {
     @include breakpoint(xs) {
+     margin-left: -10rem;
+     }
+   
+    @include breakpoint(lg) {
+      margin: 0;
       top: 50%;
       transform: translateY(-50%);
-      left: 1rem;
+      left: -15rem;
     }
   }
   
   .next {
     @include breakpoint(xs) {
+      margin-left: 10rem;
+    }
+    @include breakpoint(lg) {
+      margin: 0;
       top: 50%;
       transform: translateY(-50%);
-      right: 1rem;
+      right: -15rem;
     }
   }
   

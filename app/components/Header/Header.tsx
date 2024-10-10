@@ -6,9 +6,10 @@ import { FaXTwitter } from "react-icons/fa6";
 import { FaFacebookF } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { HiX } from "react-icons/hi";
-import { RiArrowDropDownLine } from "react-icons/ri";
+import { RiArrowDropDownLine, RiArrowDropRightLine } from "react-icons/ri";
 import { Link, useLoaderData } from '@remix-run/react';
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+
 import Modes from '../Modes/Modes';
 import { loader } from '~/root';
 
@@ -88,7 +89,7 @@ const Header = () => {
             <div className={styles.left}>
               <Link className={styles.home} to="/">ROYA TECHNOLOGY</Link>
               <div className={styles.dropmenuview}>
-                <div className={styles.linker} onClick={() => setIsDeparmentsOpen(true)}>Departments <RiArrowDropDownLine /></div>
+                <div className={styles.linker} onClick={() => setIsDeparmentsOpen(true)}>Sections <RiArrowDropDownLine /></div>
                 {
                   isDeparmentsOpen ? (
                     <div className={styles.drop}>
@@ -101,7 +102,7 @@ const Header = () => {
                                   <div className={styles.sectionitems}>
                                     {
                                       itm.projects.map(project => (
-                                        <Link to={`/${itm.name}/${project.id}`} key={project.id} className={styles.sectionitem}>{project.name}</Link>
+                                        <Link to={`/${itm.name}/${project.id}`} key={project.id} className={styles.sectionitem}>{project.name} </Link>
                                       ))
                                     }
                                   </div>
@@ -111,7 +112,7 @@ const Header = () => {
                           )
                         )
                       }
-                      <Link onClick={() => setIsDeparmentsOpen(false)} to={`/all`} key={"all"} className={styles.dropitm}>All Departments</Link>
+                      <Link onClick={() => setIsDeparmentsOpen(false)} to={`/all`} key={"all"} className={styles.dropitm}>All Sections</Link>
                     </div>
                   ): null
                 }
@@ -140,14 +141,14 @@ const Header = () => {
                 <RiArrowDropDownLine />
                 </li>
               <li onClick={toggleDeparments} className={styles.mobilelink} >
-                <Link to={"/"} >Departments</Link>
+                <Link to={"/"} >Sections</Link>
                 <RiArrowDropDownLine  />
               </li>
               {
                 isDeparmentsOpen ? (
                   headerData.categories.map((itm) => (
                     <div key={itm.name}  onClick={() => setOpenedDepartment(openedDepartment === itm.name ? "" : itm.name)} className={styles.departmentsLink}>
-                      <div className={styles.department}>{itm.name}</div>
+                      <div className={styles.department}>{itm.name} {openedDepartment === itm.name ?  <RiArrowDropDownLine />: <RiArrowDropRightLine />}</div>
 
                       { 
                         openedDepartment === itm.name &&  <div className={styles.departmentprojects}>
@@ -156,7 +157,7 @@ const Header = () => {
                               <Link key={pro.name} to={`/${itm.name}/${pro.id}`} onClick={() => setIsOpen(false)} className={styles.departmentproject}>{pro.name}</Link>
                             ))
                           }
-                          <Link key={`${itm.name}-all`} to={`/${itm.name}`} onClick={() => setIsOpen(false)} className={styles.departmentproject}>All {itm.name}</Link>
+                          <Link key={`${itm.name}-all`} to={`/${itm.name}`} onClick={() => setIsOpen(false)} className={styles.departmentproject}>All {itm.name} Projects</Link>
                         </div>
                       }
                     </div>
@@ -165,12 +166,11 @@ const Header = () => {
               }
               {
                 isDeparmentsOpen ? (
-                  <Link key={"all"} to={`/all`} onClick={() => setIsOpen(false)} className={styles.departmentsLink}>All Departments</Link>
+                  <Link key={"all"} to={`/all`} onClick={() => setIsOpen(false)} className={styles.departmentsLink}>All Sections</Link>
                 ) : null
               }
               <li className={styles.mobilelink} >
-                <Link to={"#footer"} >Contact Us</Link>
-                <RiArrowDropDownLine />
+                <Link to={"#footer"} onClick={() => setIsOpen(false)} >Contact Us</Link>
               </li>
             </ul>
           ) : null

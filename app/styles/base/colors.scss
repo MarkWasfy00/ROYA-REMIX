@@ -6,6 +6,8 @@ html.light {
 
     --background: white;
 
+    --secondary-opacity: rgba(255, 255, 255, 0.808);
+
     --font: #0068B5;
     --font-common: white;
 }
@@ -18,6 +20,8 @@ html.dark {
     --quaternary: white;
 
     --background: #121212;
+
+    --secondary-opacity: #262626b9;
 
     --font: white;
     --font-common: white;

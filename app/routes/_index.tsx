@@ -4,6 +4,7 @@ import Slider from "~/components/Slider/Slider";
 import { json, redirect, useLoaderData } from "@remix-run/react";
 import { Server } from "~/utils/server";
 import Recent from "~/components/Recent/Recent";
+import { useTheme } from "./resources/theme-switch";
 
 
 interface Category {
@@ -43,9 +44,12 @@ export const loader = async () => {
 
 
 export const meta: MetaFunction = () => {
+  const theme = useTheme()
+
   return [
     { title: "Roya Technology" },
     { name: "description", content: "Roya Technology, an Egyptian LLC, specializes in Process Automation, Instrumentation, and Electrical solutions. We offer end-to-end automation services including design, engineering, testing, commissioning, and startup. With extensive experience in EPC projects, we manage everything from bidding to project handover, delivering professional solutions for clients and partners." },
+    { name: "theme-color", content: theme === "dark" ? "#636363": "#fff" },
   ];
 };
 
