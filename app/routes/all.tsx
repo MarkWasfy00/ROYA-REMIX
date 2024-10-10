@@ -3,6 +3,7 @@ import { redirect, useLoaderData, useParams } from '@remix-run/react';
 import Card from '~/components/Card/Card';
 import styles from "../styles/pages/departments.module.scss"
 import { Server } from '~/utils/server';
+import { useTheme } from './resources/theme-switch';
 
 interface Projects {
   projects: {
@@ -42,10 +43,11 @@ export const loader: LoaderFunction = async ({ request, params, context }) => {
 };
 
 export const meta: MetaFunction = () => {
-
+  const theme = useTheme()
   return [
     { title: "Expert Software Development, Hardware Design, Repair & Upgrade Services" },
     { name: "description", content: "At Roya Technology, we offer a wide range of services including Software Development, Hardware Design, Repair, and System Upgrades. Our expert team provides custom software solutions, innovative hardware designs, and reliable repair services to ensure optimal performance and seamless upgrades for all your technology needs." },
+    { name: "theme-color", content: theme === "dark" ? "#262626": "#fff" },
   ];
 };
 

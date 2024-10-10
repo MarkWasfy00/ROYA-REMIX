@@ -3,6 +3,7 @@ import styles from "../styles/pages/blog.module.scss"
 import { LoaderFunction, MetaFunction, redirect } from "@remix-run/node";
 import { useLoaderData, useParams } from "@remix-run/react";
 import ReactMarkdown from 'react-markdown';
+import { useTheme } from "./resources/theme-switch";
 
 interface ProjectContent {
   status: string;
@@ -40,11 +41,12 @@ export const loader: LoaderFunction = async ({ request, params, context }) => {
 
 export const meta: MetaFunction =  ({ data }) => {
   const project = data as Project
-
+  const theme = useTheme()
 
   return [
     { title: project.name },
     { name: "description", content: project.description },
+    { name: "theme-color", content: theme === "dark" ? "#262626": "#fff" },
   ];
 };
 

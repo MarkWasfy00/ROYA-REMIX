@@ -3,6 +3,7 @@ import { redirect, useLoaderData, useParams } from '@remix-run/react';
 import Card from '~/components/Card/Card';
 import styles from "../../styles/pages/departments.module.scss"
 import { Server } from '~/utils/server';
+import { useTheme } from '../resources/theme-switch';
 
 interface Projects {
   projects: {
@@ -44,10 +45,12 @@ export const loader: LoaderFunction = async ({ request, params, context }) => {
 
 export const meta: MetaFunction = () => {
   const { departments } = useParams()
+  const theme = useTheme()
 
   return [
     { title: departments },
     { name: "description", content: `${departments} Professional solutions for Software Development, Hardware Design, Repair, and Upgrades, delivering expert services to optimize performance and meet your technology needs.` },
+    { name: "theme-color", content: theme === "dark" ? "#262626": "#fff" },
   ];
 };
 
