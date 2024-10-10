@@ -75,6 +75,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 		schema: ThemeFormSchema,
 	})
 
+
 	invariantResponse(submission.status === 'success', 'Invalid theme received')
 
 	const { theme, redirectTo } = submission.value
