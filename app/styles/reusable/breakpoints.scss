@@ -8,7 +8,7 @@
         @content;
       }
     }@else if $dimension == lg {
-      @media (min-width: 98.75rem) { // 1100 px
+      @media (min-width: 100em) { // 1580 px
         @content;
       }
     }

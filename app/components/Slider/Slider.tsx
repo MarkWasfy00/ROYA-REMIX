@@ -6,7 +6,6 @@ import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { useState, useEffect, useRef } from 'react';
 import { Swiper as SwiperType } from 'swiper';
 import { Server } from "../../utils/server"; 
-
 import 'swiper/scss';
 
 interface Slide {
