@@ -26,6 +26,11 @@
             font-size: 5rem;
             font-weight: 600;
         }
+
+        .date {
+            font-size: 2rem;
+            color: $font-special;
+        }
         .description {
             border-top: 1px solid $color-tertiary-light;
             margin-top: 2rem;

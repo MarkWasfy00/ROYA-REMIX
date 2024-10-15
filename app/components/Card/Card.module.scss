@@ -1,14 +1,92 @@
 @use "../../styles/reusable.all.scss" as *;
 
 
-.card {
-    background-color: $color-secondary-light;
-    // width: 30rem;
-    max-height: 50rem;
-    border: 2px solid $color-tertiary-light;
-    @include flex(column,center);
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(10rem);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+};
+
+@keyframes fadeShow {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateY(-2rem);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+
+
+.cardview {
+    @include flex(column, center);
+    gap: 5rem;
+    height: 100vh;
+
+    
+    @include breakpoint(xs) {
+        // padding-top: 5rem;
+        grid-column: 1 / 3;
+        display: grid;
+        // background-color: red;
+        align-items: center;
+        scroll-snap-align: center; 
+    }
+
+    @include breakpoint(md) {
+        grid-template-columns: 1fr 1fr;
+        
+    }
+
     .top {
+        // border-radius: 1rem;
+        // max-height: 30rem;
+        overflow: hidden;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        @include breakpoint(lg) {
+            height: 50rem;
+        }
         img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            
+        }
+
+        @include breakpoint(md) {
+            order: 1;
+        }
+    }
+
+    .topreverse {
+        // max-height: 30rem;
+        overflow: hidden;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+        @include breakpoint(lg) {
+            height: 50rem;
+        }
+        img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
         }
     }
@@ -17,44 +95,202 @@
         @include flex(column);
         color: $font;
         gap: 1rem;
-        padding: 1rem;
-        height: 20rem;
-        width: 100%;
+        // padding: 1rem;
+        position: relative;
+        margin-left: 2rem;
+
         .title {
             font-size: 2rem;
-            font-weight: 500;
+            font-weight: 900;
+            text-transform: capitalize;
+
+            @include breakpoint(md) {
+                font-size: 5rem;
+            }
         }
 
         .description {
-            font-size: 1.5rem;
+            font-size: 2rem;
             display: -webkit-box;        /* Required for line clamping */
             -webkit-box-orient: vertical; /* Required for line clamping */
             overflow: hidden;           /* Hide overflow */
             -webkit-line-clamp: 3;      /* Number of lines to show before truncating */
-            max-height: 4.5em;          /* Set max height based on line height */
+            max-height: 4.5em;     
+            font-weight: 500;     /* Set max height based on line height */
             line-height: 1.5em;    
+            color: $font;
+
+            @include breakpoint(md) {
+                font-size: 1.5rem
+            }
         }
 
         .linker {
-            margin-top: auto;
+            @include flex(false, center);
+            gap: 2rem;
+            font-size: 3rem;
+            color: $font;
+            text-decoration: none;
+            
+            // background-color: $color-primary-light;
+
             .link {
                 
                 background-color: transparent;
-                padding: 1rem;
-                border: 2px solid $color-primary-light;
+                border: 2px solid $color-tertiary-light;
                 color: $font;
                 font-size: 1.5rem;
                 transition: $transition;
                 cursor: pointer;
-                width: 100%;
+                // width: 100%;
+                text-decoration: none;
                 
 
                 &:hover {
                     color: $font-common;
                     background-color: $color-primary-light;
+                    border: 2px solid $color-primary-light;
+                }
+            }
+
+            .number {
+                position: absolute;
+                top: -5rem;
+                left: -1rem;
+                font-size: 12rem;
+                font-weight: 700;
+                opacity: .2;
+                z-index: -1;
+                color: $font-special;
+                // display: none;
+            }
+
+            .readmore {
+                @include flex(false, center);
+                gap: 1rem;
+                font-size: 2rem;
+                color: $font-special;
+                
+
+                svg {
                 }
             }
         }
     }
 
+
 }
+
+
+// .card {
+//     border: 2px solid $color-tertiary-light;
+//     display: grid;
+//     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+//     position: relative;
+//     overflow: hidden;
+//     @include breakpoint(md) {
+//         grid-template-columns: 1fr;
+//     }
+
+//     &:hover {
+//         .top {
+//             img {
+//                 filter: grayscale(100%);
+//             }
+//         }
+//         .bot {
+//             display: block;
+//         }
+
+//     }
+
+//     .top {
+//         transition: 1s;
+        
+//         img {
+//             width: 100%;
+//             height: 100%;
+//             object-fit: cover;
+//         }
+//     }
+
+//     .topreverse {
+//         img {
+//             width: 100%;
+//             height: 100%;
+//             object-fit: cover;
+//         }
+//     }
+
+//     .bot {  
+//         position: absolute;
+//         bottom: 0;
+//         @include flex(column);
+//         color: $font;
+//         gap: 1rem;
+//         padding: 3rem;
+//         display: none;
+//         opacity: 0;
+//         animation: .6s fadeIn .1s ease-in-out forwards;
+        
+
+//         .title {
+//             font-size: 2rem;
+//             font-weight: 500;
+//             text-transform: capitalize;
+//             color: $font-common;
+
+//             @include breakpoint(md) {
+//                 font-size: 5rem;
+//             }
+//         }
+
+//         .description {
+//             font-size: 1.5rem;
+//             display: -webkit-box;        /* Required for line clamping */
+//             -webkit-box-orient: vertical; /* Required for line clamping */
+//             overflow: hidden;           /* Hide overflow */
+//             -webkit-line-clamp: 3;      /* Number of lines to show before truncating */
+//             max-height: 4.5em;          /* Set max height based on line height */
+//             line-height: 1.5em;    
+//             color: $font-common;
+//         }
+
+//         .linker {
+//             margin-top: auto;
+//             @include flex(false, center);
+//             gap: 2rem;
+//             font-size: 3rem;
+//             color: $color-tertiary-light;
+//             text-decoration: none;
+
+//             .link {
+                
+//                 background-color: transparent;
+//                 padding: 1rem;
+//                 border: 2px solid $color-tertiary-light;
+//                 color: $font-common;
+//                 font-size: 1.5rem;
+//                 transition: $transition;
+//                 cursor: pointer;
+//                 // width: 100%;
+//                 text-decoration: none;
+
+
+//                 &:hover {
+//                     color: $font-common;
+//                     background-color: $color-primary-light;
+//                     border: 2px solid $color-primary-light;
+//                 }
+//             }
+
+           
+
+//             .readmore {
+//                 @include flex(false, center);
+//                 gap: 1rem;
+//             }
+//         }
+//     }
+
+// }

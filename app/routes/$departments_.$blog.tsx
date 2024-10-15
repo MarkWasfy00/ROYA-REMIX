@@ -5,16 +5,11 @@ import { useLoaderData, useParams } from "@remix-run/react";
 import ReactMarkdown from 'react-markdown';
 import { useTheme } from "./resources/theme-switch";
 
+
+
 interface ProjectContent {
   status: string;
-  project: {
-    id: number;
-    name: string;
-    description: string;
-    image: string;
-    category_name: string;
-    content: string;
-  }
+  project: Project
 }
 
 interface Project {
@@ -24,8 +19,26 @@ interface Project {
   image: string;
   category_name: string;
   content: string;
+  createdAt: string;
 }
 
+function formatTimestamp(isoString: string): string {
+  const date: Date = new Date(isoString);
+
+  // Get day, month, year, etc., with proper options for formatting
+  const options: Intl.DateTimeFormatOptions = { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric', 
+      hour: 'numeric', 
+      minute: 'numeric', 
+      second: 'numeric', 
+      hour12: true 
+  };
+  
+  // Convert to a human-readable format
+  return date.toLocaleDateString('en-US', options);
+}
 
 export const loader: LoaderFunction = async ({ request, params, context }) => {
   const { departments, blog } = params
@@ -63,6 +76,7 @@ const Blog = ({ params }: { params: { department: string; blog: string } }) => {
       </div>
       <div className={styles.blog}>
         <div className={styles.title}>{project.name}</div>
+        <div className={styles.date}>{ formatTimestamp(project.createdAt)}</div>
         <div className={styles.description}>
           <ReactMarkdown>{project.content}</ReactMarkdown>
         </div>

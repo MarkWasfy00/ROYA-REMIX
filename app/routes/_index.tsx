@@ -1,10 +1,11 @@
 import type {  MetaFunction } from "@remix-run/node";
-import styles from "../styles/pages/index.module.scss"
+import styles from "../styles/pages/index.module.scss";
 import Slider from "~/components/Slider/Slider";
 import { json, redirect, useLoaderData } from "@remix-run/react";
 import { Server } from "~/utils/server";
-import Recent from "~/components/Recent/Recent";
 import { useTheme } from "./resources/theme-switch";
+
+
 
 
 interface Category {
@@ -25,9 +26,6 @@ type Categories = {
   logos: Logos[]
 };
 
-
-
-
 // Loader function runs on the server
 export const loader = async () => {
   const response = await fetch(`${Server.apiv1}/categories`, { cache: "force-cache" })
@@ -41,7 +39,6 @@ export const loader = async () => {
   }
   return json({ categories: category.categories, logos: sponsers.logos })
 };
-
 
 export const meta: MetaFunction = () => {
   const theme = useTheme()
@@ -84,9 +81,6 @@ export default function Index() {
           }
         </div>
       </div>
-      {/* <div className={styles.recent}>
-        <Recent />
-      </div> */}
       <div className={styles.square}></div>
     </main>
   );

@@ -3,8 +3,10 @@
 
 @keyframes fadeIn {
   0% {
+    left: -40rem;
   }
   100% {
+    left: 0;
     background-color: $color-secondary-opacity;
   }
 }
@@ -51,10 +53,11 @@
 
   @include breakpoint (lg) {
     .activeswiper{
-      width: 85% !important;
+      width: 90% !important;
       transition: 1s;
+      overflow: hidden;
       .content {
-        animation: .5s fadeIn  ease-in-out forwards;
+        animation: 1s fadeIn  ease-in-out forwards;
         transform: translateY(-50%);
         top: 50%;
       }
@@ -150,17 +153,18 @@
         font-size: 1.5rem;
         text-align: center;
         opacity: 0;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: $font-special;
+        font-weight: 500;
         .link {
+          @include flex(false, center);
           a {
-            color: $font;
-            text-decoration: none;
-            text-transform: uppercase;
-            font-weight: 500;
           }
         }
     
         .icon {
-          color: $font;
+          color: $font-special;
           font-size: 3rem;
         }
       }
@@ -220,7 +224,7 @@
       margin: 0;
       top: 50%;
       transform: translateY(-50%);
-      left: -15rem;
+      left: -4rem;
     }
   }
   
@@ -232,7 +236,7 @@
       margin: 0;
       top: 50%;
       transform: translateY(-50%);
-      right: -15rem;
+      right: -4rem;
     }
   }
   

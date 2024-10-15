@@ -40,7 +40,7 @@
         // position: relative;
         height: 8rem;
         // margin: 0 auto;
-        @include flex(false,center);
+        @include flex(false,center,center);
         gap: 1rem;
         flex-wrap: wrap;
 
@@ -62,7 +62,7 @@
         }
         .down {
             // position: absolute;
-            font-weight: 500;
+            font-weight: 300;
             font-size: 3.5rem;
     
             @include breakpoint(xs) {

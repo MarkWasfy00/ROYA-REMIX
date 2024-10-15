@@ -1,5 +1,13 @@
 @use "../reusable.all.scss" as *;
 
+
+html {
+  scroll-behavior: smooth; /* Smooth scrolling */
+}
+
+
+
+
 /*
   1. Use a more-intuitive box-sizing model.
 */

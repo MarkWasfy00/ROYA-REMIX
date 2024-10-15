@@ -87,12 +87,12 @@ const Slider: React.FC<SliderProps> = ({ slidesInfo }) => {
                 <div className={styles.head}>
                   <div className={styles.title}>{itm.name}</div>
                   <div className={styles.info}>{itm.description}</div>
-                  <div className={styles.path}>
+                  <Link to={`/${itm.name}`} className={styles.path}>
                     <div className={styles.link}>
-                      <Link to={`/${itm.name}`}>SOLUTIONS</Link>
+                      <div >SOLUTIONS</div>
                     </div>
                     <div className={styles.icon}> <MdKeyboardArrowRight /> </div>
-                  </div>
+                  </Link>
                 </div>
               </div>
             </SwiperSlide>
