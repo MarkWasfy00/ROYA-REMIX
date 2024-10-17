@@ -41,7 +41,7 @@ const Slider: React.FC<SliderProps> = ({ slidesInfo }) => {
 
   
   const handleSlideChange = (swiper: SwiperType) => {
-    setActiveIndex(swiper.activeIndex); // Update activeIndex on slide change
+    setActiveIndex(swiper.realIndex); // Use realIndex instead of activeIndex
   };
 
   // Attach hover event listeners to the Swiper wrapper on mount
@@ -70,6 +70,7 @@ const Slider: React.FC<SliderProps> = ({ slidesInfo }) => {
           slidesPerView={"auto"}
           spaceBetween={20}
           centeredSlides={true}
+          loop={true}
           autoplay={{
             delay: 3000,
             disableOnInteraction: false, // Ensures interaction doesn't permanently disable autoplay
@@ -81,7 +82,7 @@ const Slider: React.FC<SliderProps> = ({ slidesInfo }) => {
           className={`${styles.swiperparent} mySwiper`}
         >
           {slidesInfo.map((itm, idx) => (
-            <SwiperSlide key={itm.id} className={`${styles.swiperbody} ${idx === activeIndex ? styles.activeswiper: ""}`}>
+            <SwiperSlide key={itm.id} className={`${styles.swiperbody} ${idx === activeIndex ? styles.activeswiper: styles.notactive}`}>
               <div className={styles.image} style={{ backgroundImage: `url(${Server.media}${itm.image})` }} ></div>
               <div className={styles.content}>
                 <div className={styles.head}>

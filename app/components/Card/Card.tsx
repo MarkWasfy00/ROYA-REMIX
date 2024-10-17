@@ -26,7 +26,7 @@ const Card: React.FC<Card> = ({ project, cardNo }) => {
   const descriptionControls = useAnimation(); // For child animation
   const [currentScrollY, setCurrentScrollY] = useState(0);
   const [ref, inView] = useInView({
-    threshold: 0.23, // Trigger when 30% of the card is visible
+    threshold: 0.1, // Trigger when 30% of the card is visible
   });
 
   // Debounce the scroll event handler to reduce excessive state updates

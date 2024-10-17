@@ -95,6 +95,10 @@ const departments = () => {
 
   return (
     <section className={styles.departments}>
+      <div className={styles.info}>
+        <div className={styles.title}>All Sections</div>
+        <div className={styles.description}>This is a short description</div>
+      </div>
       <div className={styles.card}>
         {
           projects.map((project, idx) => (

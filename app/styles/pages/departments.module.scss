@@ -19,47 +19,41 @@
     
 
 
-    .title {
-        color: $font;
-        font-weight: 200;
-        padding: 1rem;
-        text-align: left;
-        color: $font-special;
-        font-size: 3rem;
+    .info {
+        @include flex(column, center, center);
+        height: 70rem;
+        gap: 3rem;
 
-        @include breakpoint(xs) {
-            font-size: 5rem;
-            left: 50%;
-            // background-color: $color-tertiary-light;
-            top: 5rem;
-            transform: translateX(-50%);
-
-            position: absolute;
-
+        .title {
+            font-weight: 200;
+            color: $font;
+            font-size: 4rem;
+            text-align: center;
         }
 
-        @include breakpoint(lg) {
-            font-size: 5rem;
-            text-align: center;
-            position: absolute;
-            left: 50%;
-            // background-color: $color-tertiary-light;
-            top: 5rem;
-            transform: translateX(-50%);
+        .description {
+            font-size: clamp(1.2rem, 2.5vw, 2rem);
+
+            color: $font-special;
+            padding: 2rem;
+            
+            font-weight: 500;
+            @include breakpoint(xs) {
+                text-align: center;
+            }
         }
     }
 
 
     .card {
         @include flex(column, center);
-        gap: 15rem;
+        // gap: 15rem;
         
-
         @include breakpoint(xs) {
             gap: 0;
         }
         
-        @include breakpoint (md) {
+        @include breakpoint (lg) {
             grid-template-columns: 1fr 1fr; 
         }
         
@@ -71,7 +65,7 @@
         font-size: 5rem;
         color: $font;
         bottom: 4rem;
-        
+        opacity: .5;
         @include flex(false, center, center);
 
     }

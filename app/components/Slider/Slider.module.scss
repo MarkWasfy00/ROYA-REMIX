@@ -4,9 +4,20 @@
 @keyframes fadeIn {
   0% {
     left: -40rem;
+    background-color: $color-secondary-opacity;
   }
   100% {
     left: 0;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    left: 0;
+    background-color: $color-secondary-opacity;
+  }
+  100% {
+    left: -100rem;
     background-color: $color-secondary-opacity;
   }
 }
@@ -58,8 +69,13 @@
       overflow: hidden;
       .content {
         animation: 1s fadeIn  ease-in-out forwards;
-        transform: translateY(-50%);
-        top: 50%;
+        
+      }
+    }
+
+    .notactive {
+      .content {
+        animation: 1s fadeOut 0s ease-in-out forwards;
       }
     }
   }
@@ -92,6 +108,7 @@
   position: relative;
   // height: 50rem !important;
   width: 90% !important;
+  overflow: hidden;
   .image {
     background-size: cover;
     background-repeat: no-repeat;
@@ -108,11 +125,15 @@
 
   .content {
     @include breakpoint(lg) {
+      transform: translateY(-50%);
+      top: 50%;
+      left: -100rem;
+      // animation: 1s fadeOut 2s ease-in-out forwards;
       position: absolute;
-      top: 0%;
-      left: 0;
       width: 50rem;
       padding: 2rem 5rem;
+      background-color: $color-secondary-opacity;
+
     }
 
     .head {

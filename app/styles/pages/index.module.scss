@@ -94,7 +94,7 @@
             // &::after {
             //     content: "";
             //     position: absolute;
-            //     width: 30rem;
+            //     width: 30rem;ADD LOG
             //     height: 10rem;
             //     // background-color: $background;
             //     background: linear-gradient(to right, $background 20%, rgba(18, 18, 18, .1) 100%);
@@ -113,7 +113,7 @@
             animation-iteration-count: infinite;
             animation-timing-function: linear;
             animation-name: ticker;
-            animation-duration: 20s; 
+            animation-duration: 30s; 
             @include flex(false, center);
             gap: 2rem;
             
@@ -161,7 +161,7 @@
     }
 
     100% {
-        -webkit-transform: translateX(-220%);
-        transform: translateX(-220%);
+        -webkit-transform: translateX(-200%);
+        transform: translateX(-200%);
     }
 }

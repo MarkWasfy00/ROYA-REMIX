@@ -1,4 +1,4 @@
-import { LoaderFunction, MetaFunction } from '@remix-run/node';
+  import { LoaderFunction, MetaFunction } from '@remix-run/node';
 import { redirect, useLoaderData, useParams } from '@remix-run/react';
 import Card from '~/components/Card/Card';
 import styles from "../../styles/pages/departments.module.scss"
@@ -23,16 +23,26 @@ interface Project {
 
 type SingleProject = Project[]
 
+
+interface Category {
+  id: number;
+  name: string;
+  description: string;
+  long_description: string;
+  image: string;
+}
+
 export const loader: LoaderFunction = async ({ request, params, context }) => {
   const slug = params.departments  // Get the dynamic `id` from the URL
   const response = await fetch(`${Server.apiv1}/projects/${slug}`, { cache: "force-cache" })
+  const category = await fetch(`${Server.apiv1}/category/${slug}`, { cache: "force-cache" })
   const projects: Projects = await response.json()
+  const singleCategory = await category.json()
 
   if (projects.status) {
     return redirect("/404")
   }
-
-  return projects.projects
+  return { projects: projects.projects, category: singleCategory }
 };
 
 export const meta: MetaFunction = () => {
@@ -48,7 +58,7 @@ export const meta: MetaFunction = () => {
 
 const Departments = () => {
   const { departments } = useParams();
-  const projects = useLoaderData<SingleProject>();
+  const { projects, category } = useLoaderData<{ projects: SingleProject; category: Category }>();
   const [showArrow, setShowArrow] = useState(true);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]); // Array to hold references to each card
 
@@ -74,6 +84,7 @@ const Departments = () => {
   
       if (scrollPosition >= documentHeight - threshold) {
         setShowArrow(false); // Hide arrow when close to the bottom
+
       } else {
         setShowArrow(true); // Show arrow when not close to the bottom
       }
@@ -88,7 +99,10 @@ const Departments = () => {
 
   return (
     <section className={styles.departments}>
-      <div className={styles.title}>{departments}</div>
+      <div className={styles.info}>
+        <div className={styles.title}>{departments}</div>
+        <div className={styles.description}>{category.long_description}</div>
+      </div>
       <div className={styles.card}>
         {
           projects.map((project, idx) => (
@@ -104,7 +118,7 @@ const Departments = () => {
       </div>
 
       {
-        showArrow && projects.length > 1 && (
+        showArrow && projects.length > 0 && (
           <div className={styles.arrow} onClick={scrollToNextCard}>
             <FaAngleDoubleDown />
           </div>
