@@ -21,7 +21,7 @@
 
     .info {
         @include flex(column, center, center);
-        height: 70rem;
+        min-height: 70rem;
         gap: 3rem;
 
         .title {
@@ -32,7 +32,7 @@
         }
 
         .description {
-            font-size: clamp(1.2rem, 2.5vw, 2rem);
+            font-size: 1.2rem;
 
             color: $font-special;
             padding: 2rem;
@@ -40,6 +40,7 @@
             font-weight: 500;
             @include breakpoint(xs) {
                 text-align: center;
+                font-size: 2rem;
             }
         }
     }

@@ -6,6 +6,8 @@ import { Server } from '~/utils/server';
 import { useTheme } from '../resources/theme-switch';
 import { FaAngleDoubleDown } from "react-icons/fa";
 import { useEffect, useState, useRef } from 'react';
+import ReactMarkdown from 'react-markdown';
+
 
 interface Projects {
   projects: Project[],
@@ -101,7 +103,9 @@ const Departments = () => {
     <section className={styles.departments}>
       <div className={styles.info}>
         <div className={styles.title}>{departments}</div>
-        <div className={styles.description}>{category.long_description}</div>
+        <div className={styles.description}>
+          <ReactMarkdown>{category.long_description}</ReactMarkdown>
+        </div>
       </div>
       <div className={styles.card}>
         {
