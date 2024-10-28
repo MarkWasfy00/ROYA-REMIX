@@ -12,8 +12,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { z } from "zod";
 import * as cookie from "cookie";
 import { IoMenu } from "react-icons/io5";
-import { FaMoon, FaInstagram, FaFacebookF, FaLinkedin, FaPhoneAlt } from "react-icons/fa";
-import { FaXTwitter, FaNewspaper } from "react-icons/fa6";
+import { FaMoon, FaInstagram, FaFacebookF, FaLinkedin, FaPhoneAlt, FaAngleDoubleDown } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import { HiX } from "react-icons/hi";
 import { RiArrowDropDownLine, RiArrowDropRightLine } from "react-icons/ri";
 import { MdOutlineKeyboardArrowRight, MdEmail, MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
@@ -22,9 +22,11 @@ import { useForm, getFormProps } from "@conform-to/react";
 import { ServerOnly } from "remix-utils/server-only";
 import { TbDeviceLandlinePhone } from "react-icons/tb";
 import ReactMarkdown from "react-markdown";
+import { IoIosArrowRoundForward } from "react-icons/io";
+import { useAnimation, motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import Ticker from "@andremov/react-ticker";
 const ABORT_DELAY = 5e3;
 function handleRequest(request, responseStatusCode, responseHeaders, remixContext, loadContext) {
   return isbot(request.headers.get("user-agent") || "") ? handleBotRequest(
@@ -408,18 +410,18 @@ const Header = () => {
   ] });
 };
 const footer = "_footer_1g8r0_1";
-const info$1 = "_info_1g8r0_14";
+const info$2 = "_info_1g8r0_14";
 const contact = "_contact_1g8r0_19";
 const socialmedia = "_socialmedia_1g8r0_38";
-const description$2 = "_description_1g8r0_47";
+const description$3 = "_description_1g8r0_47";
 const logo = "_logo_1g8r0_52";
 const map = "_map_1g8r0_63";
 const styles$7 = {
   footer,
-  info: info$1,
+  info: info$2,
   contact,
   socialmedia,
-  description: description$2,
+  description: description$3,
   logo,
   map
 };
@@ -549,18 +551,33 @@ const route0 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProper
   default: App,
   loader: loader$4
 }, Symbol.toStringTag, { value: "Module" }));
-const section$1 = "_section_9k5mz_1";
-const cover = "_cover_9k5mz_13";
-const blog = "_blog_9k5mz_20";
-const title$4 = "_title_9k5mz_20";
-const description$1 = "_description_9k5mz_24";
+const section$1 = "_section_2rp57_1";
+const cover = "_cover_2rp57_13";
+const blog = "_blog_2rp57_20";
+const title$4 = "_title_2rp57_20";
+const date = "_date_2rp57_24";
+const description$2 = "_description_2rp57_28";
 const styles$5 = {
   section: section$1,
   cover,
   blog,
   title: title$4,
-  description: description$1
+  date,
+  description: description$2
 };
+function formatTimestamp(isoString) {
+  const date2 = new Date(isoString);
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: true
+  };
+  return date2.toLocaleDateString("en-US", options);
+}
 const loader$3 = async ({ request, params, context }) => {
   const { departments: departments2, blog: blog2 } = params;
   const response = await fetch(`${Server.apiv1}/project-id/${blog2}`, { cache: "force-cache" });
@@ -585,6 +602,7 @@ const Blog = ({ params }) => {
     /* @__PURE__ */ jsx("div", { className: styles$5.cover, children: /* @__PURE__ */ jsx("img", { src: `${Server.media}${project.image}`, alt: project.name, width: 900, height: 300 }) }),
     /* @__PURE__ */ jsxs("div", { className: styles$5.blog, children: [
       /* @__PURE__ */ jsx("div", { className: styles$5.title, children: project.name }),
+      /* @__PURE__ */ jsx("div", { className: styles$5.date, children: formatTimestamp(project.createdAt) }),
       /* @__PURE__ */ jsx("div", { className: styles$5.description, children: /* @__PURE__ */ jsx(ReactMarkdown, { children: project.content }) })
     ] })
   ] });
@@ -595,57 +613,154 @@ const route1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProper
   loader: loader$3,
   meta: meta$4
 }, Symbol.toStringTag, { value: "Module" }));
-const cardview = "_cardview_44jjc_11";
-const top = "_top_44jjc_22";
-const topreverse = "_topreverse_44jjc_32";
-const bot$1 = "_bot_44jjc_37";
-const title$3 = "_title_44jjc_45";
-const description = "_description_44jjc_55";
-const linker = "_linker_44jjc_65";
-const link$1 = "_link_44jjc_65";
-const card$1 = "_card_44jjc_11";
-const fadeIn$1 = "_fadeIn_44jjc_1";
+const cardview = "_cardview_165l2_27";
+const top = "_top_165l2_45";
+const topreverse = "_topreverse_165l2_63";
+const bot$1 = "_bot_165l2_76";
+const title$3 = "_title_165l2_84";
+const description$1 = "_description_165l2_94";
+const linker = "_linker_165l2_110";
+const link$1 = "_link_165l2_110";
+const number = "_number_165l2_132";
+const readmore = "_readmore_165l2_142";
+const fadeIn$1 = "_fadeIn_165l2_1";
+const fadeShow = "_fadeShow_165l2_1";
+const slideIn = "_slideIn_165l2_1";
 const styles$4 = {
   cardview,
   top,
   topreverse,
   bot: bot$1,
   title: title$3,
-  description,
+  description: description$1,
   linker,
   link: link$1,
-  card: card$1,
-  fadeIn: fadeIn$1
+  number,
+  readmore,
+  fadeIn: fadeIn$1,
+  fadeShow,
+  slideIn
 };
-const Card = ({ project, card_no }) => {
-  return /* @__PURE__ */ jsxs("div", { className: `${card_no < 2 ? styles$4.cardview : styles$4.card}`, children: [
-    /* @__PURE__ */ jsx("div", { className: `${card_no === 1 ? styles$4.topreverse : styles$4.top}`, children: /* @__PURE__ */ jsx("img", { src: `${Server.media}${project.image}`, alt: project.name, width: 600, height: 300 }) }),
-    /* @__PURE__ */ jsxs("div", { className: styles$4.bot, children: [
-      /* @__PURE__ */ jsx("div", { className: styles$4.title, children: project.name }),
-      /* @__PURE__ */ jsx("div", { className: styles$4.description, children: project.description }),
-      /* @__PURE__ */ jsxs(Link, { className: styles$4.linker, to: `/${project.category_name}/${project.id}`, children: [
-        /* @__PURE__ */ jsx(FaNewspaper, {}),
-        /* @__PURE__ */ jsx("button", { className: styles$4.link, children: "VIEW" })
-      ] })
-    ] })
-  ] });
+const isOdd = (number2) => {
+  return number2 % 2 !== 0;
 };
-const departments$2 = "_departments_1brre_1";
-const title$2 = "_title_1brre_9";
-const card = "_card_1brre_14";
+const Card = ({ project, cardNo }) => {
+  const controls = useAnimation();
+  const descriptionControls = useAnimation();
+  const [currentScrollY, setCurrentScrollY] = useState(0);
+  const [ref, inView] = useInView({
+    threshold: 0.1
+    // Trigger when 30% of the card is visible
+  });
+  const handleScroll = () => {
+    const scrollY = window.scrollY;
+    setCurrentScrollY(scrollY);
+  };
+  useEffect(() => {
+    const throttledScroll = () => {
+      let timeout;
+      return () => {
+        if (timeout) clearTimeout(timeout);
+        timeout = setTimeout(handleScroll, 100);
+      };
+    };
+    const handleThrottledScroll = throttledScroll();
+    window.addEventListener("scroll", handleThrottledScroll);
+    return () => {
+      window.removeEventListener("scroll", handleThrottledScroll);
+    };
+  }, []);
+  useEffect(() => {
+    if (inView) {
+      controls.start("visible");
+      descriptionControls.start("visible");
+    } else {
+      controls.start("hidden");
+      descriptionControls.start("hidden");
+    }
+  }, [inView, controls, descriptionControls]);
+  const boxVariants = {
+    hidden: { opacity: 0, y: 100 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeOut" }
+    }
+  };
+  const descriptionVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: 0.7, ease: "easeOut", delay: 0.5 }
+      // Adding a delay for sequential effect
+    }
+  };
+  return /* @__PURE__ */ jsxs(
+    motion.div,
+    {
+      className: `${styles$4.cardview}`,
+      ref,
+      initial: "hidden",
+      animate: controls,
+      variants: boxVariants,
+      children: [
+        /* @__PURE__ */ jsx("div", { className: `${isOdd(cardNo) ? styles$4.topreverse : styles$4.top}`, children: /* @__PURE__ */ jsx(
+          "img",
+          {
+            src: `${Server.media}${project.image}`,
+            alt: project.name,
+            width: 600,
+            height: 300
+          }
+        ) }),
+        /* @__PURE__ */ jsxs("div", { className: styles$4.bot, children: [
+          /* @__PURE__ */ jsx("div", { className: styles$4.title, children: project.name }),
+          /* @__PURE__ */ jsx(
+            motion.div,
+            {
+              initial: "hidden",
+              animate: descriptionControls,
+              variants: descriptionVariants,
+              className: styles$4.description,
+              children: project.description
+            }
+          ),
+          /* @__PURE__ */ jsxs(Link, { className: styles$4.linker, to: `/${project.category_name}/${project.id}`, children: [
+            /* @__PURE__ */ jsx("div", { className: styles$4.number, children: cardNo + 1 >= 10 ? cardNo + 1 : "0" + (cardNo + 1) }),
+            /* @__PURE__ */ jsxs("div", { className: styles$4.readmore, children: [
+              "read more",
+              /* @__PURE__ */ jsx(IoIosArrowRoundForward, {})
+            ] })
+          ] })
+        ] })
+      ]
+    }
+  );
+};
+const departments$1 = "_departments_84u2t_1";
+const info$1 = "_info_84u2t_15";
+const title$2 = "_title_84u2t_23";
+const description = "_description_84u2t_29";
+const card = "_card_84u2t_41";
+const arrow = "_arrow_84u2t_56";
 const styles$3 = {
-  departments: departments$2,
+  departments: departments$1,
+  info: info$1,
   title: title$2,
-  card
+  description,
+  card,
+  arrow
 };
 const loader$2 = async ({ request, params, context }) => {
   const slug = params.departments;
   const response = await fetch(`${Server.apiv1}/projects/${slug}`, { cache: "force-cache" });
+  const category = await fetch(`${Server.apiv1}/category/${slug}`, { cache: "force-cache" });
   const projects = await response.json();
+  const singleCategory = await category.json();
   if (projects.status) {
     return redirect("/404");
   }
-  return projects.projects;
+  return { projects: projects.projects, category: singleCategory };
 };
 const meta$3 = () => {
   const { departments: departments2 } = useParams();
@@ -656,68 +771,113 @@ const meta$3 = () => {
     { name: "theme-color", content: theme === "dark" ? "#262626" : "#fff" }
   ];
 };
-const departments$1 = () => {
+const Departments = () => {
   const { departments: departments2 } = useParams();
-  const projects = useLoaderData();
+  const { projects, category } = useLoaderData();
+  const [showArrow, setShowArrow] = useState(true);
+  const cardRefs = useRef([]);
+  const scrollToNextCard = () => {
+    const currentScroll = window.scrollY;
+    const nextCard = cardRefs.current.find(
+      (ref) => ref && ref.offsetTop > currentScroll + window.innerHeight / 2
+    );
+    if (nextCard) {
+      nextCard.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const threshold = 500;
+      if (scrollPosition >= documentHeight - threshold) {
+        setShowArrow(false);
+      } else {
+        setShowArrow(true);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return /* @__PURE__ */ jsxs("section", { className: styles$3.departments, children: [
-    /* @__PURE__ */ jsx("div", { className: styles$3.title, children: `${departments2} Section` }),
-    /* @__PURE__ */ jsx("div", { className: styles$3.card, children: projects.map((project, idx) => /* @__PURE__ */ jsx(Card, { project, card_no: idx }, project.id)) })
+    /* @__PURE__ */ jsxs("div", { className: styles$3.info, children: [
+      /* @__PURE__ */ jsx("div", { className: styles$3.title, children: departments2 }),
+      /* @__PURE__ */ jsx("div", { className: styles$3.description, children: /* @__PURE__ */ jsx(ReactMarkdown, { children: category.long_description }) })
+    ] }),
+    /* @__PURE__ */ jsx("div", { className: styles$3.card, children: projects.map((project, idx) => /* @__PURE__ */ jsx(
+      "div",
+      {
+        ref: (el) => cardRefs.current[idx] = el,
+        className: styles$3.projectCard,
+        children: /* @__PURE__ */ jsx(Card, { project, cardNo: idx })
+      },
+      project.id
+    )) }),
+    showArrow && projects.length > 0 && /* @__PURE__ */ jsx("div", { className: styles$3.arrow, onClick: scrollToNextCard, children: /* @__PURE__ */ jsx(FaAngleDoubleDown, {}) })
   ] });
 };
 const route2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  default: departments$1,
+  default: Departments,
   loader: loader$2,
   meta: meta$3
 }, Symbol.toStringTag, { value: "Module" }));
-const bg = "_bg_1fh2k_1";
-const view = "_view_1fh2k_1";
-const container$1 = "_container_1fh2k_10";
-const title$1 = "_title_1fh2k_28";
-const up = "_up_1fh2k_45";
-const down = "_down_1fh2k_55";
-const pattern = "_pattern_1fh2k_64";
-const ticker = "_ticker_1fh2k_72";
-const tickeritem = "_tickeritem_1fh2k_83";
-const square = "_square_1fh2k_101";
+const bg = "_bg_1he8y_1";
+const view = "_view_1he8y_1";
+const container$1 = "_container_1he8y_10";
+const title$1 = "_title_1he8y_28";
+const up = "_up_1he8y_45";
+const down = "_down_1he8y_55";
+const pattern = "_pattern_1he8y_64";
+const tickertape = "_tickertape_1he8y_72";
+const ticker = "_ticker_1he8y_72";
+const tickeritem = "_tickeritem_1he8y_92";
+const square = "_square_1he8y_110";
 const styles$2 = {
   bg,
   view,
   container: container$1,
-  "switch": "_switch_1fh2k_25",
+  "switch": "_switch_1he8y_25",
   title: title$1,
   up,
   down,
   pattern,
+  tickertape,
   ticker,
   tickeritem,
   square
 };
-const section = "_section_xp2y8_29";
-const swiperparent = "_swiperparent_xp2y8_34";
-const activeswiper = "_activeswiper_xp2y8_44";
-const content = "_content_xp2y8_49";
-const fadeIn = "_fadeIn_xp2y8_1";
-const head = "_head_xp2y8_55";
-const title = "_title_xp2y8_55";
-const fadeInWithoutBackground = "_fadeInWithoutBackground_xp2y8_1";
-const info = "_info_xp2y8_58";
-const fadeInWithoutBackgroundAndTranslate = "_fadeInWithoutBackgroundAndTranslate_xp2y8_1";
-const path = "_path_xp2y8_62";
-const swiperbody = "_swiperbody_xp2y8_66";
-const image = "_image_xp2y8_70";
-const link = "_link_xp2y8_130";
-const icon = "_icon_xp2y8_136";
-const bot = "_bot_xp2y8_140";
-const swipers = "_swipers_xp2y8_146";
-const prev = "_prev_xp2y8_152";
-const next = "_next_xp2y8_153";
+const section = "_section_1203g_39";
+const swiperparent = "_swiperparent_1203g_44";
+const activeswiper = "_activeswiper_1203g_54";
+const content = "_content_1203g_59";
+const fadeIn = "_fadeIn_1203g_1";
+const notactive = "_notactive_1203g_62";
+const fadeOut = "_fadeOut_1203g_1";
+const head = "_head_1203g_66";
+const title = "_title_1203g_66";
+const fadeInWithoutBackground = "_fadeInWithoutBackground_1203g_1";
+const info = "_info_1203g_69";
+const fadeInWithoutBackgroundAndTranslate = "_fadeInWithoutBackgroundAndTranslate_1203g_1";
+const path = "_path_1203g_73";
+const swiperbody = "_swiperbody_1203g_77";
+const image = "_image_1203g_82";
+const link = "_link_1203g_148";
+const icon = "_icon_1203g_152";
+const bot = "_bot_1203g_156";
+const swipers = "_swipers_1203g_162";
+const prev = "_prev_1203g_168";
+const next = "_next_1203g_169";
 const styles$1 = {
   section,
   swiperparent,
   activeswiper,
   content,
   fadeIn,
+  notactive,
+  fadeOut,
   head,
   title,
   fadeInWithoutBackground,
@@ -748,7 +908,7 @@ const Slider = ({ slidesInfo }) => {
     }
   };
   const handleSlideChange = (swiper) => {
-    setActiveIndex(swiper.activeIndex);
+    setActiveIndex(swiper.realIndex);
   };
   useEffect(() => {
     const swiperEl = swiperRef.current;
@@ -773,6 +933,7 @@ const Slider = ({ slidesInfo }) => {
           slidesPerView: "auto",
           spaceBetween: 20,
           centeredSlides: true,
+          loop: true,
           autoplay: {
             delay: 3e3,
             disableOnInteraction: false
@@ -782,13 +943,13 @@ const Slider = ({ slidesInfo }) => {
           onSwiper: (swiper) => setSwiperInstance(swiper),
           onSlideChange: (swiper) => handleSlideChange(swiper),
           className: `${styles$1.swiperparent} mySwiper`,
-          children: slidesInfo.map((itm, idx) => /* @__PURE__ */ jsxs(SwiperSlide, { className: `${styles$1.swiperbody} ${idx === activeIndex ? styles$1.activeswiper : ""}`, children: [
+          children: slidesInfo.map((itm, idx) => /* @__PURE__ */ jsxs(SwiperSlide, { className: `${styles$1.swiperbody} ${idx === activeIndex ? styles$1.activeswiper : styles$1.notactive}`, children: [
             /* @__PURE__ */ jsx("div", { className: styles$1.image, style: { backgroundImage: `url(${Server.media}${itm.image})` } }),
             /* @__PURE__ */ jsx("div", { className: styles$1.content, children: /* @__PURE__ */ jsxs("div", { className: styles$1.head, children: [
               /* @__PURE__ */ jsx("div", { className: styles$1.title, children: itm.name }),
               /* @__PURE__ */ jsx("div", { className: styles$1.info, children: itm.description }),
-              /* @__PURE__ */ jsxs("div", { className: styles$1.path, children: [
-                /* @__PURE__ */ jsx("div", { className: styles$1.link, children: /* @__PURE__ */ jsx(Link, { to: `/${itm.name}`, children: "SOLUTIONS" }) }),
+              /* @__PURE__ */ jsxs(Link, { to: `/${itm.name}`, className: styles$1.path, children: [
+                /* @__PURE__ */ jsx("div", { className: styles$1.link, children: /* @__PURE__ */ jsx("div", { children: "SOLUTIONS" }) }),
                 /* @__PURE__ */ jsxs("div", { className: styles$1.icon, children: [
                   " ",
                   /* @__PURE__ */ jsx(MdKeyboardArrowRight, {}),
@@ -816,7 +977,6 @@ const loader$1 = async () => {
   }
   return json({ categories: category.categories, logos: sponsers.logos });
 };
-const colors = ["#632bf3", "#f122c8", "#f16022", "#9ef344", "#44d3f3"];
 const meta$2 = () => {
   const theme = useTheme();
   return [
@@ -830,18 +990,7 @@ function Index() {
   return /* @__PURE__ */ jsxs("main", { className: styles$2.container, children: [
     /* @__PURE__ */ jsx("div", { className: styles$2.slider, children: /* @__PURE__ */ jsx(Slider, { slidesInfo: data.categories }) }),
     /* @__PURE__ */ jsx("div", { className: styles$2.pattern, children: /* @__PURE__ */ jsx("img", { src: "/background/pattern.webp", alt: "Pattern" }) }),
-    /* @__PURE__ */ jsx("div", { className: styles$2.sponserticker, children: /* @__PURE__ */ jsx(Ticker, { duration: 20, children: colors.map((item, index) => /* @__PURE__ */ jsx(
-      "div",
-      {
-        style: {
-          backgroundColor: item,
-          margin: "5px",
-          height: "250px",
-          width: "200px"
-        }
-      },
-      index
-    )) }) }),
+    /* @__PURE__ */ jsx("div", { className: styles$2.tickertape, children: /* @__PURE__ */ jsx("div", { className: styles$2.ticker, children: data.logos.map((sponser) => /* @__PURE__ */ jsx("div", { className: styles$2.tickeritem, children: /* @__PURE__ */ jsx("img", { src: `${Server.media}${sponser.image}`, alt: sponser.name }) }, sponser.id)) }) }),
     /* @__PURE__ */ jsx("div", { className: styles$2.square })
   ] });
 }
@@ -893,9 +1042,45 @@ const meta = () => {
 const departments = () => {
   useParams();
   const projects = useLoaderData();
+  const [showArrow, setShowArrow] = useState(true);
+  const cardRefs = useRef([]);
+  const scrollToNextCard = () => {
+    const currentScroll = window.scrollY;
+    const nextCard = cardRefs.current.find(
+      (ref) => ref && ref.offsetTop > currentScroll + window.innerHeight / 2
+    );
+    if (nextCard) {
+      nextCard.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const threshold = 500;
+      if (scrollPosition >= documentHeight - threshold) {
+        setShowArrow(false);
+      } else {
+        setShowArrow(true);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return /* @__PURE__ */ jsxs("section", { className: styles$3.departments, children: [
-    /* @__PURE__ */ jsx("div", { className: styles$3.title, children: `All Sections` }),
-    /* @__PURE__ */ jsx("div", { className: styles$3.card, children: projects.map((project, idx) => /* @__PURE__ */ jsx(Card, { project, card_no: idx }, project.id)) })
+    /* @__PURE__ */ jsx("div", { className: styles$3.info, children: /* @__PURE__ */ jsx("div", { className: styles$3.title, children: "All Sections" }) }),
+    /* @__PURE__ */ jsx("div", { className: styles$3.card, children: projects.map((project, idx) => /* @__PURE__ */ jsx(
+      "div",
+      {
+        ref: (el) => cardRefs.current[idx] = el,
+        className: styles$3.projectCard,
+        children: /* @__PURE__ */ jsx(Card, { project, cardNo: idx })
+      },
+      project.id
+    )) }),
+    showArrow && projects.length > 1 && /* @__PURE__ */ jsx("div", { className: styles$3.arrow, onClick: scrollToNextCard, children: /* @__PURE__ */ jsx(FaAngleDoubleDown, {}) })
   ] });
 };
 const route5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
@@ -904,7 +1089,7 @@ const route5 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProper
   loader,
   meta
 }, Symbol.toStringTag, { value: "Module" }));
-const serverManifest = { "entry": { "module": "/assets/entry.client-rsUcF_IA.js", "imports": ["/assets/components-D9yW67jy.js"], "css": ["/assets/entry-CBBok9zg.css"] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": true, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": true, "module": "/assets/root-DlEWtJQY.js", "imports": ["/assets/components-D9yW67jy.js", "/assets/theme-switch-CZ2tQNSM.js", "/assets/iconBase-CTZDJq8B.js", "/assets/index-DSIQx5V1.js", "/assets/index-qrJB7iQp.js"], "css": ["/assets/entry-CBBok9zg.css", "/assets/root-DzwdVjLT.css"] }, "routes/$departments_.$blog": { "id": "routes/$departments_.$blog", "parentId": "root", "path": ":departments/:blog", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/_departments_._blog-DKSJQdhn.js", "imports": ["/assets/components-D9yW67jy.js", "/assets/server-DQ4YMZus.js", "/assets/theme-switch-CZ2tQNSM.js"], "css": ["/assets/_departments_-BiAQL__1.css"] }, "routes/$departments": { "id": "routes/$departments", "parentId": "root", "path": ":departments", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/route-DqPfA4OA.js", "imports": ["/assets/components-D9yW67jy.js", "/assets/departments.module-LWUG77hh.js", "/assets/theme-switch-CZ2tQNSM.js", "/assets/server-DQ4YMZus.js", "/assets/index-DSIQx5V1.js", "/assets/iconBase-CTZDJq8B.js"], "css": ["/assets/departments-CXfF6zx2.css"] }, "routes/_index": { "id": "routes/_index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/_index-BV42Z_GA.js", "imports": ["/assets/components-D9yW67jy.js", "/assets/index-qrJB7iQp.js", "/assets/server-DQ4YMZus.js", "/assets/theme-switch-CZ2tQNSM.js", "/assets/iconBase-CTZDJq8B.js"], "css": ["/assets/_index-Ds1treat.css"] }, "routes/404": { "id": "routes/404", "parentId": "root", "path": "404", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/404-CgOmZbXC.js", "imports": ["/assets/components-D9yW67jy.js", "/assets/theme-switch-CZ2tQNSM.js"], "css": ["/assets/404-jmy2S5q2.css"] }, "routes/all": { "id": "routes/all", "parentId": "root", "path": "all", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/all-D0l5t6Es.js", "imports": ["/assets/components-D9yW67jy.js", "/assets/departments.module-LWUG77hh.js", "/assets/theme-switch-CZ2tQNSM.js", "/assets/server-DQ4YMZus.js", "/assets/index-DSIQx5V1.js", "/assets/iconBase-CTZDJq8B.js"], "css": ["/assets/departments-CXfF6zx2.css"] } }, "url": "/assets/manifest-9f69f30e.js", "version": "9f69f30e" };
+const serverManifest = { "entry": { "module": "/assets/entry.client-vnoMfCNw.js", "imports": ["/assets/components-8eWpWs3F.js"], "css": ["/assets/entry-sZtZiw_m.css"] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "hasAction": true, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": true, "module": "/assets/root-g5gw4i3U.js", "imports": ["/assets/components-8eWpWs3F.js", "/assets/theme-switch-CkskyUwO.js", "/assets/iconBase-BX1KLYFg.js", "/assets/index-CVhYdjMx.js", "/assets/index-sg3mZtH6.js"], "css": ["/assets/entry-sZtZiw_m.css", "/assets/root-DzwdVjLT.css"] }, "routes/$departments_.$blog": { "id": "routes/$departments_.$blog", "parentId": "root", "path": ":departments/:blog", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/_departments_._blog-Bhv-cNFn.js", "imports": ["/assets/components-8eWpWs3F.js", "/assets/server-DQ4YMZus.js", "/assets/theme-switch-CkskyUwO.js", "/assets/index-Hslu0jVQ.js"], "css": ["/assets/_departments_-BspoJ8HT.css"] }, "routes/$departments": { "id": "routes/$departments", "parentId": "root", "path": ":departments", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/route-DRLtMBO-.js", "imports": ["/assets/components-8eWpWs3F.js", "/assets/departments.module-BPI-61n3.js", "/assets/theme-switch-CkskyUwO.js", "/assets/index-CVhYdjMx.js", "/assets/index-Hslu0jVQ.js", "/assets/server-DQ4YMZus.js", "/assets/iconBase-BX1KLYFg.js"], "css": ["/assets/departments-BeRfzGFh.css"] }, "routes/_index": { "id": "routes/_index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/_index-BLiV6hiE.js", "imports": ["/assets/components-8eWpWs3F.js", "/assets/index-sg3mZtH6.js", "/assets/server-DQ4YMZus.js", "/assets/theme-switch-CkskyUwO.js", "/assets/iconBase-BX1KLYFg.js"], "css": ["/assets/_index-D6eLytoN.css"] }, "routes/404": { "id": "routes/404", "parentId": "root", "path": "404", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": false, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/404-ClogNWSR.js", "imports": ["/assets/components-8eWpWs3F.js", "/assets/theme-switch-CkskyUwO.js"], "css": ["/assets/404-jmy2S5q2.css"] }, "routes/all": { "id": "routes/all", "parentId": "root", "path": "all", "index": void 0, "caseSensitive": void 0, "hasAction": false, "hasLoader": true, "hasClientAction": false, "hasClientLoader": false, "hasErrorBoundary": false, "module": "/assets/all-CtlGogUE.js", "imports": ["/assets/components-8eWpWs3F.js", "/assets/departments.module-BPI-61n3.js", "/assets/theme-switch-CkskyUwO.js", "/assets/index-CVhYdjMx.js", "/assets/server-DQ4YMZus.js", "/assets/iconBase-BX1KLYFg.js"], "css": ["/assets/departments-BeRfzGFh.css"] } }, "url": "/assets/manifest-0ee20cbd.js", "version": "0ee20cbd" };
 const mode = "production";
 const assetsBuildDirectory = "build/client";
 const basename = "/";
